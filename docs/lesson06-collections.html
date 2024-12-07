@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>reveal.js</title>
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/kotlin.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/vs.css">
+</head>
+<body>
+<div class="reveal">
+	<div class="slides">
+		<section data-background-gradient="var(--kotlin-gradient)">
+			<i>Week 1 | Lesson 6</i>
+			<h1>Kotlin Standard Library</h1>
+			<em>Collections</em>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Arrays</h2>
+			</section>
+			<section>
+				<h3>Arrays</h3>
+				<div class="summary">
+					Array is a <span class="highlight">fixed-size</span> sequential collection of elements of the same type.
+				</div>
+				<div class="content">
+					<div>
+						<h4 class="highlight">Declaration and Initialization</h4>
+						<ul>
+							<li>Arrays can be declared using the <code class="inline">arrayOf&lt;Type&gt;()</code> function.</li>
+							<li>Arrays are fixed-size, meaning their size cannot be changed once created.</li>
+						</ul>
+					</div>
+					<br />
+					<div>
+						<h4 class="highlight">Type-Safety</h4>
+						<ul>
+							<li>
+								Arrays in Kotlin are type-safe - they can only hold elements of the specified type (and its subtypes).
+								<br />
+								<sub>
+									If array contains elements of different types, the type of the array is inferred to be the least common supertype of the elements,
+									<br />
+									or <code class="inline">Any</code> in case of no common supertype.
+								</sub>
+							</li>
+							<li>The type declaration can be omitted if the type of the array can be inferred from the elements passed to the function.</li>
+						</ul>
+					</div>
+					<br />
+					<div>
+						<h4 class="highlight">Access and Modification</h4>
+						<ul>
+							<li>
+								Elements can be accessed or modified using their index and <code class="inline">[]</code> operator. Arrays are zero-based
+								<br />
+								<sub>For example <code class="inline">array[0]</code> will access first element.
+								</sub>
+							</li>
+							<li>Modifying an element using an index that is out of bounds will throw an <code class="inline">ArrayIndexOutOfBoundsException</code>.</li>
+							<li>Arrays can be iterated using loops.</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h3>Array Declaration and Initialization</h3>
+				<div class="content">
+					<ul>
+						<li>
+							Arrays can be declared using the <code class="inline">arrayOf&lt;Type&gt;()</code> function.
+							<br />
+							<sub>Type declaration can be omitted if the type of the array can be inferred from the elements passed to the <code class="inline">arrayOf()</code> function.</sub>
+						</li>
+						<li>
+							Arrays in Kotlin are <strong class="highlight">type-safe</strong> - they can only hold elements of the specified type.
+							<br />
+							<sub>
+								If array contains elements of different types, the type of the array is inferred to be the least common supertype of the elements,
+								<br />
+								or <code class="inline">Any</code> in case of no common supertype.
+							</sub>
+						</li>
+						<li>Arrays are <strong class="highlight">fixed-size</strong>, meaning their size cannot be changed once created.</li>
+					</ul>
+					<pre data-trim>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							// Declaring an array of integers
+							val numbers = arrayOf(1, 2, 3, 4, 5)
+
+							// Declaring an array of strings
+							val cities = arrayOf("Bangkok", "Beijing", "Tokyo", "London", "Paris")
+
+							// Declaring an array of mixed types
+							val mixed = arrayOf(1, "Bangkok", 3.14, 'A', true)
+
+							val empty = emptyArray&lt;String&gt;() // size 0
+
+							val arrayOfNulls = arrayOfNulls&lt;String&gt;(5) // size 5, all elements are null
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Array Access and Modification</h3>
+				<div class="content">
+					<ul>
+						<li>
+							Elements can be accessed or modified using their index and <code class="inline">[]</code> operator.
+							Arrays are <strong class="highlight">zero-based</strong>.
+							<br />
+							<sub>For example <code class="inline">array[0]</code> will access first element.
+							</sub>
+						</li>
+						<li>Modifying an element using an index that is out of bounds will throw an <code class="inline">ArrayIndexOutOfBoundsException</code>.</li>
+					</ul>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val array = arrayOf(1, 2, 3, 4, 5)
+
+							// updating an element on index 4 (5th element)
+							array[4] = 42
+
+							// accessing an element on index 4 (5th element)
+							println(array[4])
+
+							// accessing an element on index 5 (6th element) - will throw ArrayIndexOutOfBoundsException
+							try {
+								println(array[5])
+							} catch (e: ArrayIndexOutOfBoundsException) {
+								println(e.message)
+							}
+						</code>
+					</pre>
+					You can get size of the array using <code class="inline">size</code> property.
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							println(array.size) // prints 5
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Array Operations</h3>
+				<div class="summary">
+					Given and array, some of the common operations on arrays include ...
+				</div>
+				<div class="content">
+					<div>
+						Iterating an array using a <code class="inline">for</code> loop or <code class="inline">forEach</code> function.
+						<pre>
+							<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+								for (element in array) {
+									println(element)
+								}
+							</code>
+						</pre>
+						<pre>
+							<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+								array.forEach { println(it) }
+							</code>
+						</pre>
+						Filtering an array
+						<pre>
+							<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+								val filtered = array.filter { it % 2 == 0 }
+							</code>
+						</pre>
+						Checking if an array contains an element
+						<pre>
+							<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+								array.contains(3) // returns true
+							</code>
+						</pre>
+						Sorting, reversing, and shuffling an array
+						<pre>
+							<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+								val sorted = array.sort() // in ascending order
+
+								val reversed = array.reverse()
+
+								val shuffled = array.shuffle()
+							</code>
+						</pre>
+					</div>
+					<div>
+						<em>
+							We will talk more about array and collection operations in the next lessons.
+						</em>
+					</div>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Collections</h2>
+			</section>
+			<section>
+				<h3>Collections</h3>
+				<div class="summary">
+					Collection is a group of <span class="highlight">variable number</span> of objects of the same type (and its subtypes).
+				</div>
+				<div class="content">
+					<div>
+						<p>
+							The Kotlin Standard Library provides implementations for basic collection types: sets, lists, and maps.
+							A pair of interfaces represent each collection type:
+						</p>
+					</div>
+					<div class="row">
+						<div class="column">
+							<ul>
+								<li>
+									<span class="highlight">read-only interface</span>
+									<br />
+									provides operations for accessing collection elements.
+								</li>
+								<li>
+									<span class="highlight">mutable interface</span>
+									<br />
+									extends the corresponding read-only interface with write operations: adding, removing, and updating its elements.
+								</li>
+							</ul>
+							<p>
+								See Kotlin <a href="https://kotlinlang.org/docs/collections-overview.html#collection-types">documentation</a> for more details.
+							</p>
+						</div>
+						<div class="column">
+							<img src="./img/collections-diagram.png" style="padding-left: 20px"/>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section>
+				<h3>Collections</h3>
+				<div class="summary">
+					There are 3 main types of collections in Kotlin: lists, sets, and maps.
+				</div>
+				<div class="content">
+					<p>
+						<h4>Lists</h4>
+						Lists are <strong>ordered</strong> collections of elements that <strong>can contain duplicates</strong> and individual elements can be accessed by their index.
+					</p>
+					<p>
+						<h4>Sets</h4>
+						Sets are <strong>unordered</strong> collections of unique elements, meaning order is not guaranteed, and they <strong>don't allow duplicate elements</strong>.
+					</p>
+					<p>
+						<h4>Maps</h4>
+						Maps are collections of <strong>key-value pairs</strong>, where <strong>keys are unique</strong> and are used to access values. Values can be duplicates.
+					</p>
+					<br />
+					<p>
+						<em>
+							Kotlin provides standard library functions for working with collections, which we will explore in more detail.
+						</em>
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Constructing Collections</h3>
+				<div class="summary">
+					There are standard library functions for constructing collections in Kotlin for both read-only and mutable collections.
+				</div>
+				<div class="content">
+					<p>
+						Collections are constructed using functions <code class="inline">listOf&lt;Type&gt;()</code>,
+						<code class="inline">setOf&lt;Type&gt;()</code>
+						or <code class="inline">mapOf&lt;KeyType, ValueType&gt;()</code> for read-only collections.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val list = listOf&lt;String&gt;()
+
+							val set = setOf&lt;Int&gt;()
+
+							val map = mapOf&lt;String, Int&gt;()
+						</code>
+					</pre>
+					<p>
+						Or by variable type declaration.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val list: List&lt;String&gt; = listOf()
+						</code>
+					</pre>
+					<p>
+						If type can be inferred from the elements, you can omit the type declaration.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val list = listOf("Java", "Kotlin", "JavaScript", "TypeScript", "Python")
+
+							val set = setOf(2020, 2021, 2022, 2023, 2024, 2025)
+
+							val map = mapOf(
+								"Java" to 1995,
+								"Kotlin" to 2011,
+								"JavaScript" to 1995,
+								"TypeScript" to 2012,
+								"Python" to 1991
+							)
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Constructing Collections</h3>
+				<div class="summary">
+					There are standard library functions for constructing collections in Kotlin for both read-only and mutable collections.
+				</div>
+				<div class="content">
+					<p>
+						Mutable collections can be created using <code class="inline">mutableListOf&lt;Type&gt;()</code>,
+						<code class="inline">mutableSetOf&lt;Type&gt;()</code>
+						and <code class="inline">mutableMapOf&lt;KeyType, ValueType&gt;()</code>.
+					</p>
+					<p>
+						To construct an empty collection, you can use the <code class="inline">emptyList&lt;Type&gt;()</code>,
+						<code class="inline">emptySet&lt;Type&gt;()</code>
+						or <code class="inline">emptyMap&lt;KeyType, ValueType&gt;()</code> functions.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val emptyList = emptyList&lt;String&gt;()
+
+							val emptySet = emptySet&lt;Int&gt;()
+
+							val emptyMap = emptyMap&lt;String, Int&gt;()
+						</code>
+					</pre>
+					<p>
+						Similarly, empty collections can be created <code class="inline">emptyMutableList&lt;Type&gt;()</code>,
+						<code class="inline">emptyMutableSet&lt;Type&gt;()</code>
+						and <code class="inline">emptyMutableMap&lt;KeyType, ValueType&gt;()</code> functions.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Arrays vs. Collections</h3>
+				<div class="summary">
+					Both arrays and Collections are used to store data. <br />
+					There are however some notable differences that make them suitable for different use cases.
+				</div>
+				<div class="content">
+					<table>
+						<thead>
+						<tr style="font-weight: bold">
+							<td></td>
+							<td>Arrays</td>
+							<td>Collections</td>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td style="font-weight: bold">Size</td>
+							<td>Arrays have fixed size. This may lead to memory wastage, but is also inconvenient to work with.</td>
+							<td>Collections can grow or shrink dynamically to accommodate the data.</td>
+						</tr>
+						<tr>
+							<td style="font-weight: bold">Type Safety</td>
+							<td>Arrays are type-safe</td>
+							<td>Collections are type-safe (through generic typing)</td>
+						</tr>
+						<tr>
+							<td style="font-weight: bold">Performance</td>
+							<td>Arrays can perform better than collections for some operations because of their simpler memory layout, lower overhead, and ability to employ direct indexing.</td>
+							<td>Collections have more overhead than arrays, and certain operations may be slower as a result. However, the built-in utilities in collections make them more convenient for complex data manipulation.</td>
+						</tr>
+						<tr>
+							<td style="font-weight: bold">Functionality</td>
+							<td>Arrays offer basic functionality such as adding elements, getting elements, and modifying existing elements.</td>
+							<td>
+								Collections provide a wide variety of functionalities.
+								They can be sorted, reversed, shuffled. They support operations like addition, inspection, modification, deletion, searching and other.</td>
+						</tr>
+						<tr>
+							<td style="font-weight: bold">Use Cases</td>
+							<td>Arrays are best for fixed-size collections where performance is critical.</td>
+							<td>Collections are best for dynamic collections with rich functionality and advanced operations.</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+			<section>
+				<h3>Collections: Kotlin vs. Java</h3>
+				<div class="summary">
+					Collections in Kotlin are actually one of the most significant differences between Kotlin and Java,
+					because they are implemented differently in Kotlin.
+				</div>
+				<div class="content">
+					<table>
+						<thead>
+						<tr>
+							<td style="font-weight: bold"></td>
+							<td style="font-weight: bold">Java</td>
+							<td style="font-weight: bold">Kotlin</td>
+						</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td style="font-weight: bold">Null Safety</td>
+								<td>Collections can contain null values unless explicitly handled.</td>
+								<td>Collections are null-safe by default. You can explicitly declare nullable collections if needed.</td>
+							</tr>
+							<tr>
+								<td style="font-weight: bold">Read-Only vs Mutable</td>
+								<td>Collections are mutable by default. Read-only views can be created using utility methods.</td>
+								<td>Distinguishes between read-only (List, Set, Map) and mutable (MutableList, MutableSet, MutableMap) collections.</td>
+							</tr>
+							<tr>
+								<td style="font-weight: bold">Higher-Order Functions</td>
+								<td>Introduced lambda expressions and streams in Java 8, but the syntax is more verbose compared to Kotlin.</td>
+								<td>Supports higher-order functions and lambda expressions, making it easier to perform operations like filtering, mapping, and reducing.</td>
+							</tr>
+							<tr>
+								<td style="font-weight: bold">Default Implementations</td>
+								<td>Requires more boilerplate code for common operations.</td>
+								<td>Provides default implementations for many collection operations, making the code more concise.</td>
+							</tr>
+						</tbody>
+					</table>
+					<blockquote>
+						Note that because Java and Kotlin are fully interoperable,
+						you can opt to use Java implementations of collections in Kotlin, if needed.
+					</blockquote>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Adding, Removing and Retrieving Elements</h2>
+				<div style="background-color: yellow">TODO</div>
+			</section>
+			<section>
+				<h3>Adding Elements</h3>
+				<div class="content">
+					<p>
+						For immutable collections, you can use the <code class="inline">plus()</code> function to create a new collection with the added element.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val list = mutableListOf("Java", "Kotlin", "JavaScript", "TypeScript")
+
+							list.plus("Python")
+						</code>
+					</pre>
+					<p>
+						For mutable collections, you can use the <code class="inline">add()</code>,
+						<code class="inline">addFirst()</code>, <code class="inline">addLast()</code>
+						and <code class="inline">addAll()</code>functions to add an elements to the collection.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val mutableList = mutableListOf("Java", "Kotlin")
+
+							mutableList.add("C#")
+							mutableList.addLast("Rust")
+							mutableList.addAll(listOf("JavaScript", "TypeScript"))
+						</code>
+					</pre>
+
+					<p>
+						For both mutable and immutable collections, you can use the <code class="inline">+</code> operator to create a new collection with the added element.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val newList = list + "Python"
+						</code>
+					</pre>
+					<p>
+						You can also add elements to mutable collections using the <code class="inline">+=</code> operator.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							mutableList += "Python"
+						</code>
+					</pre>
+					<p>
+						And finally, you can use the <code class="inline">addAll()</code>,
+						<code class="inline">addFirst()</code>, and <code class="inline">addLast()</code> functions to add multiple elements to a mutable collection.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Removing Elements</h3>
+				<div class="content">
+					<p>
+						Removing elements is similar.
+					</p>
+					<p>
+						Immutable collections provide the
+						<code class="inline">minus()</code> function and the
+						<code class="inline">-</code> operator to create a new collection with the removed element.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val list = mutableListOf("Java", "Kotlin", "JavaScript", "TypeScript", "Python")
+
+							val newList = list - "JavaScript"
+						</code>
+					</pre>
+					<p>
+						Mutable collections provide the
+						<code class="inline">remove()</code>,
+						<code class="inline">removeFirst()</code>,
+						<code class="inline">removeLast()</code>
+						<code class="inline">removeAt()</code>,
+						<code class="inline">removeAll()</code>
+						and also <code class="inline">removeIf()</code> functions to remove an element from the collection.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val mutableList = mutableListOf("Java", "Kotlin", "JavaScript", "TypeScript", "Python")
+
+							// removes element "JavaScript"
+							mutableList.remove("JavaScript")
+
+							// removes element at index 2
+							mutableList.removeAt(2)
+
+							// removes elements "Java" and "Kotlin"
+							mutableList.removeAll(listOf("Java", "Kotlin"))
+
+							// removes elements with length > 5
+							mutableList.removeIf { it.length > 5 }
+						</code>
+					</pre>
+					<p>
+						You can also use the <code class="inline">-=</code> operator to remove an element from a mutable collection.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							mutableList -= "JavaScript"
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Retrieving Elements</h3>
+				<div style="background-color: yellow">TODO</div>
+				<div class="summary">
+
+				</div>
+				<div class="content">
+					<p>
+
+					</p>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Traversing Collections</h2>
+			</section>
+			<section>
+				<h3>Iterators</h3>
+				<div class="summary">
+					Kotlin provides standard library functions for traversing collections using iterators.
+				</div>
+				<div class="content">
+					<p>
+						Iterators can be obtained for collections that implement the <code class="inline">Iterable</code> interface
+						by calling the <code class="inline">iterator()</code> function.
+						<br />
+						Once you have an iterator, you can traverse the collection using the <code class="inline">next()</code>
+						and <code class="inline">hasNext()</code> functions.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val list = listOf("Java", "Kotlin", "JavaScript", "TypeScript", "Python")
+
+							val iterator = list.iterator()
+
+							while (iterator.hasNext()) {
+								println(iterator.next())
+							}
+						</code>
+					</pre>
+					<p>
+						For List, there is a <code class="inline">ListIterator</code>, which allows traversing the list in reverse order
+						by using the <code class="inline">previous()</code> function.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							while (listIterator.hasPrevious()) {
+								println(listIterator.previous())
+							}
+						</code>
+					</pre>
+					<p>
+						For mutable collections, you can use the <code class="inline">MutableIterator</code>,
+						which provides a <code class="inline">remove()</code> function to remove elements from the collection.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val mutableList = mutableListOf("Java", "Kotlin", "JavaScript", "TypeScript", "Python")
+
+							val iterator = mutableList.iterator()
+
+							while (iterator.hasNext()) {
+								val element = iterator.next()
+								if (element == "JavaScript") {
+									iterator.remove()
+								}
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>For Loop</h3>
+				<div class="summary">
+					You can use a <code class="inline">for</code> loop to iterate over collections that implement
+					the <code class="inline">Iterable</code> interface <br />(or its subtypes).
+				</div>
+				<div class="content">
+					<p>
+						Iterators are not the most idiomatic way to iterate over collections,
+						so Kotlin provides other ways to iterate over collections which implement the <code class="inline">Iterable</code> interface.
+					</p>
+					<p>
+						One of such ways is to use a <code class="inline">for</code> loop.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val list = listOf("Java", "Kotlin", "JavaScript", "TypeScript", "Python")
+
+							for (element in list) {
+								println(element)
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>The forEach Function</h3>
+				<div class="summary">
+					Another way to iterate over collections is to use the <code class="inline">forEach</code> function.
+				</div>
+				<div class="content">
+					<p>
+						The <code class="inline">forEach</code> function is a higher-order function that takes a lambda as an argument.
+						The basic syntax is ...
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val list = listOf("Java", "Kotlin", "JavaScript", "TypeScript", "Python")
+
+							list.forEach {
+								println(it)
+							}
+						</code>
+					</pre>
+					<p>
+						By default, the lambda passed to the <code class="inline">forEach</code> function takes a single argument,
+						which can be referenced using the <code class="inline">it</code> keyword.
+					</p>
+					<p>
+						You can also specify the argument name explicitly (in this case, <code class="inline">element</code>).
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							list.forEach { element ->
+								println(element)
+							}
+						</code>
+					</pre>
+					<p>
+						There is also a shorthand syntax for the lambda if it takes a single argument.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							list.forEach(::println)
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>The forEachIndexed Function</h3>
+				<div class="summary">
+					You can use the <code class="inline">forEachIndexed</code> function to iterate over collections with index.
+				</div>
+				<div class="content">
+					<p>
+						The <code class="inline">forEachIndexed</code> function is similar to the <code class="inline">forEach</code> function,
+						but it also provides the index of the element as the first argument to the lambda. This may be useful in some situations.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val list = listOf("Java", "Kotlin", "JavaScript", "TypeScript", "Python")
+
+							list.forEachIndexed { index, element ->
+								println("Element at index $index is $element")
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Operations</h2>
+			</section>
+			<section>
+				<h3>Operations</h3>
+				<div class="summary"></div>
+				<div class="content"></div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Filtering</h2>
+			</section>
+			<section>
+				<h3>Filtering</h3>
+				<div class="summary">
+
+				</div>
+				<div class="content">
+
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Transformations</h2>
+			</section>
+			<section>
+				<h3>Transformations</h3>
+				<div class="summary">
+
+				</div>
+				<div class="content">
+
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Ranges and Progressions</h2>
+			</section>
+			<section>
+				<h3>Ranges and Progressions</h3>
+				<div class="summary">
+
+				</div>
+				<div class="content">
+
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Sequences</h2>
+			</section>
+			<section>
+				<h3>Sequences</h3>
+				<div class="summary">
+					Kotlin standard library provides a <span class="highlight">Sequence</span> additional to collections.
+				</div>
+				<div class="content">
+					<p>
+						Unlike collections, sequences don't contain elements, they produce them while iterating.
+						This is useful when you need to perform multi-step operations on a collection.
+					</p>
+					<p>
+						<strong class="highlight">Operations on collections are executed eagerly</strong>, meaning they perform all operations on all elements immediately.
+						<br />
+						<strong class="highlight">Operations sequences are executed lazily</strong>, meaning they perform operations on elements only when needed.
+					</p>
+					<p>
+						This can be beneficial for large collections or when you need to perform complex operations on elements.
+						<br />
+						On the other hand, sequences may be less efficient for small collections or simple operations.
+					</p>
+					<p>
+						Sequences offer the smilar functions as collections, such as <code class="inline">forEach</code>, <code class="inline">map</code>, <code class="inline">filter</code>, etc.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Creating Sequences</h3>
+				<div class="content">
+					<strong>From elements</strong><br />
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val sequence = sequenceOf(1, 2, 3, 4, 5)
+						</code>
+					</pre>
+					<strong>From an Iterable</strong><br />
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val sequence = listOf(1, 2, 3, 4, 5).asSequence()
+						</code>
+					</pre>
+					<strong>From a function</strong><br />
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val sequence = generateSequence(1) { it + 1 }
+						</code>
+					</pre>
+					<strong>From chunks</strong><br />
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val sequence = sequence {
+								for (i in 1..5) {
+									yield(i)
+								}
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Practice</h2>
+			</section>
+		</section>
+	</div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+	// More info about initialization & config:
+	// - https://revealjs.com/initialization/
+	// - https://revealjs.com/config/
+	Reveal.initialize({
+		hash: true,
+
+		// Learn about plugins: https://revealjs.com/plugins/
+		plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+	});
+</script>
+</body>
+</html>

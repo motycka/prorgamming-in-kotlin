@@ -8,7 +8,7 @@
 
 	<link rel="stylesheet" href="dist/reset.css">
 	<link rel="stylesheet" href="dist/reveal.css">
-	<link rel="stylesheet" href="dist/theme/motyka.css">
+	<link rel="stylesheet" href="dist/theme/kotlin.css">
 
 	<!-- Theme used for syntax highlighted code -->
 	<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -18,68 +18,104 @@
 <div class="reveal">
 	<div class="slides">
 		<section>
-			<section data-background-color="#523996">
+			<section data-background-gradient="var(--kotlin-gradient)">
 				<h1>Programming: Kotlin</h1>
-				<br />
-				<small>Week 1:</small><br />
-				<a style="color: lightgreen" href="./lesson01.html">Lesson 1</a>&nbsp;-&nbsp;
-				<a style="color: lightgreen" href="./lesson02.html">Lesson 2</a>&nbsp;-&nbsp;
-				<a style="color: lightgreen" href="./lesson03.html">Lesson 3</a>&nbsp;-&nbsp;
-				<a style="color: lightgreen" href="./lesson04.html">Lesson 4</a>&nbsp;-&nbsp;
-				<a style="color: lightgreen" href="./lesson05.html">Lesson 5</a>
+				<em>Course Info →</em>
 				<br />
 				<br />
-				<small>Week 2:</small><br />
-				<a style="color: lightgreen" href="./lesson06.html">Lesson 6</a>&nbsp;-&nbsp;
-				<a style="color: lightgreen" href="./lesson07.html">Lesson 7</a>&nbsp;-&nbsp;
-				<a style="color: lightgreen" href="./lesson08.html">Lesson 8</a>&nbsp;-&nbsp;
-				<a style="color: lightgreen" href="./lesson09.html">Lesson 9</a>&nbsp;-&nbsp;
-				<a style="color: lightgreen" href="./lesson10.html">Lesson 10</a>
-				<br />
-				<br />
-				<small>Week 3:</small><br />
-				<a style="color: lightgreen" href="./lesson11.html">Lesson 11</a>&nbsp;-&nbsp;
-				<a style="color: lightgreen" href="./lesson12.html">Lesson 12</a>&nbsp;-&nbsp;
-				<a style="color: lightgreen" href="./lesson13.html">Lesson 13</a>&nbsp;-&nbsp;
-				<a style="color: lightgreen" href="./lesson14.html">Lesson 14</a>&nbsp;-&nbsp;
-				<a style="color: lightgreen" href="./lesson15.html">Lesson 15</a>
+				<em>Syllabus ↓</em>
+				<!--				<small>Week 1:</small><br />-->
+				<!--				<a style="color: lightgreen" href="lesson01-basics.html">Lesson 1</a>&nbsp;-&nbsp;-->
+				<!--				<a style="color: lightgreen" href="lesson02-classes-functions.html">Lesson 2</a>&nbsp;-&nbsp;-->
+				<!--				<a style="color: lightgreen" href="lesson04-testing.html">Lesson 3</a>&nbsp;-&nbsp;-->
+				<!--				<a style="color: lightgreen" href="lesson05-polymorphism.html">Lesson 4</a>&nbsp;-&nbsp;-->
+				<!--				<a style="color: lightgreen" href="lesson06-collections.html">Lesson 5</a>-->
+				<!--				<br />-->
+				<!--				<br />-->
+				<!--				<small>Week 2:</small><br />-->
+				<!--				<a style="color: lightgreen" href="lesson07-datetime.html">Lesson 6</a>&nbsp;-&nbsp;-->
+				<!--				<a style="color: lightgreen" href="lesson08-input-output.html">Lesson 7</a>&nbsp;-&nbsp;-->
+				<!--				<a style="color: lightgreen" href="lesson09-memory-concurrency.html">Lesson 8</a>&nbsp;-&nbsp;-->
+				<!--				<a style="color: lightgreen" href="lesson09-solid.html">Lesson 9</a>&nbsp;-&nbsp;-->
+				<!--				<a style="color: lightgreen" href="lesson11-api.html">Lesson 10</a>-->
+				<!--				<br />-->
+				<!--				<br />-->
+				<!--				<small>Week 3:</small><br />-->
+				<!--				<a style="color: lightgreen" href="lesson12-application.html">Lesson 11</a>&nbsp;-&nbsp;-->
+				<!--				<a style="color: lightgreen" href="lesson13-application-2.html">Lesson 12</a>&nbsp;-&nbsp;-->
+				<!--				<a style="color: lightgreen" href="lesson14-application-3.html">Lesson 13</a>&nbsp;-&nbsp;-->
+				<!--				<a style="color: lightgreen" href="lesson15-application-4.html">Lesson 14</a>&nbsp;-&nbsp;-->
+				<!--				<a style="color: lightgreen" href="lesson15-application-5.html">Lesson 15</a>-->
 			</section>
 			<section>
-				<h3>What will we learn in this course?</h3>
-				<div style="text-align: left; font-size: 80%">
-					<p style="font-weight: bold">
-						In the first week, we will establish a solid foundation in Java programming language.
-					</p>
-					<ol style="padding-left: 50px">
-						<li>Java language syntax</li>
-						<li>Basic programming principles in Java</li>
-						<li>How to test your code</li>
-					</ol>
-				</div>
-				<hr />
-				<div style="text-align: left; font-size: 80%">
-					<p style="font-weight: bold">
-						During the second week, we will look at some standard Java libraries to boost our productivity.
-					</p>
-					<ol style="padding-left: 50px">
-						<li>Some of Java's standard libraries</li>
-						<li>Common design patterns and in Java</li>
-						<li>You will understand the SOLID principle</li>
-					</ol>
-				</div>
-				<hr />
-				<div style="text-align: left; font-size: 80%">
-					<p style="font-weight: bold">
-						During the third week, we learn to how to write a Java application backend with REST API
-					</p>
-					<ol style="padding-left: 50px">
-						<li>MVC using Spring</li>
-						<li>You will implement your own application backend with REST API</li>
-					</ol>
+				<h3>Syllabus</h3>
+				<div class="content" style="font-size: 60%">
+					<div class="row">
+						<div class="column">
+							<p><strong>Week 1: Basics</strong></p>
+							<ul>
+								<li><a href="lesson01-basics.html">Lesson 1: Kotlin language syntax</a></li>
+								<li><a href="lesson02-classes-functions.html">Lesson 2: Basic programming principles</a></li>
+								<li><a href="lesson03-fuctions-advanced.html">Lesson 3: Functions (advanced)</a></li>
+								<li><a href="lesson04-testing.html">Lesson 4: How to test your code</a></li>
+								<li><a href="lesson05-polymorphism.html">Lesson 5: Inheritance and Polymorphism</a></li>
+							</ul>
+						</div>
+						<div class="column">
+							<p><strong>Week 2: Libraries</strong></p>
+							<ul>
+								<li><a href="lesson06-collections.html">Lesson 6: Collections</a></li>
+								<li><a href="lesson07-datetime.html">Lesson 7: Standard Libraries</a></li>
+								<li><a href="lesson08-memory-concurrency.html">Lesson 9: Memory and Concurrency</a></li>
+								<li><a href="lesson09-solid.html">Lesson 9: The SOLID Principle</a></li>
+								<li><a href="lesson10-api.html">Lesson 10: REST API</a></li>
+							</ul>
+						</div>
+						<div class="column">
+							<p><strong>Week 3: Application</strong></p>
+							<ul>
+								<li><a href="lesson11-application-1.html">Lesson 10: MVC using Spring</a></li>
+								<li><a href="lesson12-application-2.html">Lesson 11: Spring Application - Controllers and Services</a></li>
+								<li><a href="lesson13-application-3.html">Lesson 12: Spring Application - Repositories</a></li>
+								<li><a href="lesson14-application-4.html">Lesson 13: Spring Application - Project Work</a></li>
+								<li><a href="lesson15-application-5.html">Lesson 14: Spring Application - Project Work</a></li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</section>
-			<section>
-				<h3>Rules</h3>
+		</section>
+		<section>
+			<h3>What will we learn in this course?</h3>
+			<div class="content">
+				<p style="font-weight: bold">
+					In the first week, we will establish a solid foundation in Java programming language.
+				</p>
+				<ol style="padding-left: 50px">
+					<li>Kotlin language syntax</li>
+					<li>Basic programming principles in Kotlin</li>
+					<li>How to test your code</li>
+				</ol>
+				<p style="font-weight: bold">
+					During the second week, we will look at some standard Kotlin libraries to boost our productivity.
+				</p>
+				<ol style="padding-left: 50px">
+					<li>Some of Kotlin's standard libraries</li>
+					<li>Common design patterns and in Kotlin</li>
+					<li>You will understand the SOLID principle</li>
+				</ol>
+				<p style="font-weight: bold">
+					During the third week, we learn to how to write a Kotlin application backend with REST API
+				</p>
+				<ol style="padding-left: 50px">
+					<li>MVC using Spring</li>
+					<li>You will implement your own application backend with REST API</li>
+				</ol>
+			</div>
+		</section>
+		<section>
+			<h3>Rules</h3>
+			<div class="content content-100">
 				<ul>
 					<li>You are welcome to use any tools and resources real-world software developer would.</li>
 					<li>
@@ -99,80 +135,79 @@
 						</ul>
 					</li>
 				</ul>
-				<hr />
-			</section>
+			</div>
+		</section>
 		</section>
 		<section>
 			<h3>Grading</h3>
-			<br />
-			<p>
-				<strong>40%</strong> - Homework
+			<div class="content content-100">
+				<p>
+					<strong>40%</strong> - Homework
+					<br />
+					<em>
+						There will be 4 homework assignments - 2 in week 1, 2 in week 2.
+					</em>
+				</p>
 				<br />
-				<em>
-					There will be 4 homework assignments - 2 in week 1, 2 in week 2.
-				</em>
-			</p>
-			<br />
-			<p>
-				<strong>40%</strong> - Final project
+				<p>
+					<strong>40%</strong> - Final project
+					<br />
+					<em>
+						There will be 1 final assignment in week 3.
+					</em>
+				</p>
 				<br />
-				<em>
-					There will be 1 final assignment in week 3.
-				</em>
-			</p>
-			<br />
-			<p>
-				<strong>20%</strong> - Participation
-				<br />
-				<em>
-					Participation in class and helping your classmates.
-				</em>
-			</p>
+				<p>
+					<strong>20%</strong> - Participation
+					<br />
+					<em>
+						Participation in class and helping your classmates.
+					</em>
+				</p>
+			</div>
 		</section>
 		<section>
-			<section data-background-color="#523996">
-				<h2>About Monika</h2>
-				<em>Just call me "Moni"</em>
-			</section>
-			<section>
-				<h3>About Monika</h3>
-				<div style="font-size: 80%">
-					<p>
-						<i class="fa-solid fa-user"></i><br />
-						I have been working in software engineering for over 15 years.<br />
-						I started as a tester, then test architect, test automation engineer (technically a developer)
-						and eventually decided to become a full-time developer.
-					</p>
-					<p>
-						<i class="fa-solid fa-person-digging"></i><br />
-						I am a simple, mostly self-taught,<br />
-						not the smartest in the room,<br />
-						but I am resilient and hard-working with "do the right thing" mindset.
-					</p>
-					<p>
-						<i class="fa-solid fa-graduation-cap"></i><br />
-						I teach about testing and test automation for a non-profit organization specialized in education
-						for women who want to enter the world of IT.
-					</p>
-					<p>
-						<i class="fa-solid fa-brain"></i><br />
-						I don't know everything, about Java.<br />
-						What I can offer is practical, simple, real-world experience.
-					</p>
-					<p>
-						<i class="fa-solid fa-motorcycle"></i><br />
-						Outside my job, I am a active person who likes exercise: <br />
-						weigh training, fitness, Muay Thai :).<br />
-						I love motorcycles. I have three - I travel on them, ride off-road and race on a track.
-					</p>
-					<p>
-						<i class="fa-solid fa-heart"></i><br />
-						My belief is to enjoy each day like the next one is not guaranteed.<br />
-						Try something when possible. Don't hold back just because you are afraid.<br />
-						Treat others the way I want to be treated, be respectful, non-judgemental and kind.
-					</p>
-				</div>
-			</section>
+			<h3>About Me</h3>
+			<div class="summary">
+				Monika Protivová, Prague, Czech Republic<br />
+				Call me "Moni"
+			</div>
+			<div class="content content-center" style="font-size: 60%">
+				<p>
+					<i class="fa-solid fa-user"></i><br />
+					I have been working in software engineering for over 15 years.<br />
+					I started as a tester, then test architect, test automation engineer (technically a developer)
+					and eventually decided to become a full-time developer.
+				</p>
+				<p>
+					<i class="fa-solid fa-person-digging"></i><br />
+					I am a simple, mostly self-taught,<br />
+					not the smartest in the room,<br />
+					but I am resilient and hard-working with "do the right thing" mindset.
+				</p>
+				<p>
+					<i class="fa-solid fa-graduation-cap"></i><br />
+					I teach about testing and test automation for a non-profit organization specialized in education
+					for women who want to enter the world of IT.
+				</p>
+				<p>
+					<i class="fa-solid fa-brain"></i><br />
+					I don't know everything, about Java.<br />
+					What I can offer is practical, simple, real-world experience.
+				</p>
+				<p>
+					<i class="fa-solid fa-motorcycle"></i><br />
+					Outside my job, I am a active person who likes exercise: <br />
+					weigh training, fitness, Muay Thai :).<br />
+					I love motorcycles. I have three - I travel on them, ride off-road and race on a track.
+				</p>
+				<p>
+					<i class="fa-solid fa-heart"></i><br />
+					My belief is to enjoy each day like the next one is not guaranteed.<br />
+					Try something when possible. Don't hold back just because you are afraid.<br />
+					Treat others the way I want to be treated, be respectful, non-judgemental and kind.
+				</p>
+			</div>
 		</section>
 	</div>
 </div>

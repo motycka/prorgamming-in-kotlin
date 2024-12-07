@@ -1,0 +1,33 @@
+GET http://localhost:8084/api/users
+Authorization: Basic 0
+
+###
+POST http://localhost:8084/api/users
+Content-Type: application/json
+Authorization: Basic 0
+
+{
+  "name": "Jack",
+  "role": "USER"
+}
+
+###
+PUT http://localhost:8084/api/users/3
+Content-Type: application/json
+Authorization: Basic 0
+
+{
+  "name": "Jack UPDATED"
+}
+
+###
+GET http://localhost:8084/api/users/1
+Authorization: Basic 0
+
+###
+GET http://localhost:8084/api/users/4
+Authorization: Basic 0
+
+###
+DELETE http://localhost:8084/api/users/4
+Authorization: Basic 0

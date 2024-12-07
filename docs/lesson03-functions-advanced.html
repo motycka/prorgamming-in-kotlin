@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>reveal.js</title>
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/kotlin.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/vs.css">
+</head>
+<body>
+<div class="reveal">
+	<div class="slides">
+		<section data-background-gradient="var(--kotlin-gradient)">
+			<i>Week 1 | Lesson 3</i>
+			<h1>Functions: Advanced</h1>
+			<em>Nullables</em><br />
+			<em>Lambda Functions</em><br />
+			<em>Extension Functions</em><br />
+			<em>Scope Functions</em><br />
+			<em>Kotlin stdlib: Preconditions</em><br />
+		</section>
+<!--		<section>-->
+<!--			<section data-background-gradient="var(&#45;&#45;kotlin-gradient)">-->
+<!--				<h2>Nullables</h2>-->
+<!--			</section>-->
+<!--			<section>-->
+<!--				<h3>Nullables</h3>-->
+<!--				<div class="summary">-->
+<!--					Nullables provide a convenient way to handle null values in Kotlin.-->
+<!--				</div>-->
+<!--				<div class="content">-->
+<!--					<p>-->
+<!--						Variables in Kotlin cannot be null by default. If you want a variable to be nullable, you must declare it as nullable.-->
+<!--					</p>-->
+<!--					<div style="background-color: yellow">TODO</div>-->
+<!--				</div>-->
+<!--			</section>-->
+<!--		</section>-->
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>The Lambda Function</h2>
+			</section>
+			<section>
+				<h3>The Lambda Function</h3>
+				<div class="summary">
+					Anonymous functions, or lambda functions, are functions that are not declared, but passed immediately as an expression.
+				</div>
+				<div class="content">
+					<div style="background-color: yellow">TODO</div>
+					<p>
+						A lambda function in Kotlin is an anonymous function that can be treated as a value. It can be passed as an argument to other functions, returned from other functions, or assigned to variables.
+					</p>
+					<p>
+						The basic syntax of a lambda function is:
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val lambdaName: (Type) -> ReturnType = { argument: Type -> body }
+						</code>
+					</pre>
+					<p>
+						Here, a lambda function is assigned to a variable <code class="inline">greet</code> that takes an argument of type <code class="inline">String</code> and prints a greeting message.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val greet: (String) -> Unit = { name: String -> println("Hello, $name!") }
+
+							greet("World") // Output: Hello, World!
+						</code>
+					</pre>
+					<p>
+						Common examples of lambda function is the <code class="inline">forEach</code>:
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val cities = listOf("Bangkok", "Barcelona", "Tokyo", "London", "New York")
+
+							cities.forEach {
+								println(it)
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>The Lambda Function</h3>
+				<div class="content">
+					<p>
+						The main use of lambda functions is to pass them as arguments to higher-order functions.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun operation(x: Int, y: Int, func: (Int, Int) -> Int): Int {
+								return func(x, y)
+							}
+
+							val sum = operation(10, 20) { x, y -> x + y }
+						</code>
+					</pre>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Extension Functions</h2>
+			</section>
+			<section>
+				<h3>Extension Functions</h3>
+				<div class="summary">
+					Extension functions allow you to add new functions to existing classes without modifying the class.
+				</div>
+				<div class="content">
+					<div style="background-color: yellow">TODO</div>
+					<p>
+
+					</p>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Scope Functions</h2>
+			</section>
+			<section>
+				<h3>Scope Functions</h3>
+				<div class="summary">
+					Scope functions are functions that allow you to execute a block of code within the context of an object.
+				</div>
+				<div class="content">
+					<p>
+						When you use a scope function, you can access the object's properties and functions without having to use the object's name.
+					</p>
+					<p>
+						The scope functions in Kotlin are
+						<code class="inline">let</code>,
+						<code class="inline">run</code>,
+						<code class="inline">with</code>,
+						<code class="inline">apply</code>,
+						and <code class="inline">also</code>.
+					</p>
+					<div style="background-color: yellow">TODO</div>
+				</div>
+			</section>
+			<section>
+				<h3>let</h3>
+				<div class="summary">
+					The let function allows you to execute a block of code on a result of call chains (object).
+				</div>
+				<div class="content">
+					<p>
+						It is often used to execute a block of code on the result of a call chain, such as filter, map, or any other operation that returns a value.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val cities = listOf("Bangkok", "Barcelona", "Tokyo", "London", "New York")
+
+							val result = cities
+								.filter { it.startsWith("B") }
+								.let { println(it) }
+						</code>
+					</pre>
+					<p>
+						The <code class="inline">let</code> function is particularly useful when used with a nullable object.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val name: String? = "John"
+
+							name?.let { println("Name is $it) } ?: println("Name is was not given")
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>run</h3>
+				<div class="summary"></div>
+				<div class="content"></div>
+			</section>
+			<section>
+				<h3>with</h3>
+				<div class="summary">
+
+				</div>
+				<div class="content">
+
+				</div>
+			</section>
+			<section>
+				<h3>apply</h3>
+				<div class="summary">
+
+				</div>
+				<div class="content">
+
+				</div>
+			</section>
+			<section>
+				<h3>also</h3>
+				<div class="summary">
+
+				</div>
+				<div class="content">
+
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Kotlin Standard Library</h2>
+				<em>Preconditions</em>
+			</section>
+			<section>
+				<h3>Convenience Functions</h3>
+				<div class="summary">
+					TODO
+				</div>
+				<div class="content">
+					TODO
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Practice</h2>
+			</section>
+		</section>
+	</div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+	// More info about initialization & config:
+	// - https://revealjs.com/initialization/
+	// - https://revealjs.com/config/
+	Reveal.initialize({
+		hash: true,
+
+		// Learn about plugins: https://revealjs.com/plugins/
+		plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+	});
+</script>
+</body>
+</html>

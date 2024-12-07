@@ -1,0 +1,1140 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>reveal.js</title>
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/kotlin.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/vs.css">
+</head>
+<body>
+<div class="reveal">
+	<div class="slides">
+		<section data-background-gradient="var(--kotlin-gradient)">
+			<i>Week 1 | Lesson 5</i>
+			<h1>Kotlin Programming Basics</h1>
+			<em>Programming language and communication of intent</em><br />
+			<em>Polymorphism, Inheritance</em>
+			<em>Exceptions</em>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Programming language</h2>
+				<em>and communication of intent</em>
+			</section>
+			<section>
+				<h3>Communication of intent</h3>
+				<div class="summary">
+					Programming language provides means of expressing programmer's intent to a computer system.
+				</div>
+				<div class="content">
+					<blockquote>
+						But programming it is not just a way of giving instructions to a computer.
+						It can also be a means of communication between humans, particularly in the context of team development,
+						code reviews, and future maintenance of the software. Here are few points to keep in mind ...
+					</blockquote>
+					<h4>Code Clarity</h4>
+					<p>
+						Code is more often read than it is written. Therefore, it is important to keep it clean and easily understood.
+					</p>
+					<br />
+					<h4>Code Consistency</h4>
+					<p>
+						Keeping your code consistent in terms of syntax, programming style and design patterns makes
+						it easier to understand.
+					</p>
+					<br />
+					<h4>Documentation and Comments</h4>
+					<p>
+						Some code can become hard to understand despite our best effort. In these cases,
+						comments and code documentation should be used to clarify the programmer's intent
+						or communicate unintuitive information.
+					</p>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Object-oriented Programming</h2>
+				<em>Principles in Kotlin</em>
+			</section>
+			<section>
+				<h3>Object-oriented Programming Principles in Kotlin</h3>
+				<div class="content content-center content-100">
+					<p>Remember, there are four main OOP principles:</p>
+					<ol>
+						<li>Encapsulation</li>
+						<li>Inheritance</li>
+						<li>Polymorphism</li>
+						<li>Abstraction</li>
+					</ol>
+					<br />
+					<br />
+					<p>We will go more into detail of each of how these are handle in Kotlin on the following slides.</p>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Encapsulation</h2>
+			</section>
+			<section>
+				<h3>What is Encapsulation</h3>
+				<div class="summary">
+					Encapsulation is a concept of controlling access to the internal state of an object, protecting it from unauthorized access and ensuring data integrity.
+				</div>
+				<div class="content">
+					<ul>
+						<li>
+							In Java/Kotlin, this is typically achieved using access modifiers (private, protected, internal) and getter/setter methods.
+						</li>
+						<li>
+							By using getter/setter methods, the class can enforce its own data validation rules to ensure it's internal state remains valid and consistent.
+						</li>
+					</ul>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							data class Assignment(
+								val dueDate: LocalDate,
+								val assignee: String,
+							) {
+								private var finalGrade: Int? = null
+
+								fun getFinalGrade(): Int? {
+									return finalGrade
+								}
+
+								fun setFinalGrade(finalGrade: Int) {
+									require(finalGrade in 0..100) { "Final grade must be between 0 and 100" }
+									this.finalGrade = finalGrade
+								}
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun main() {
+								val assignment = Assignment(LocalDate.now(), "John Doe")
+								assignment.setFinalGrade(90)
+								println(assignment.getFinalGrade())
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Inheritance</h2>
+			</section>
+			<section>
+				<h3>What is Inheritance</h3>
+				<div class="summary">
+					Inheritance> establishes an <em>"is-a"</em> relationship between two classes,
+					where one class inherits properties and methods of the other class.
+				</div>
+				<div class="content">
+					<blockquote>
+						The class that inherits is called <strong>subclass</strong> and the class inherited from is called <strong>superclass</strong>.
+					</blockquote>
+					<ul>
+						<li>The class to be inherited from must be marked as <code class="inline">open</code>.</li>
+						<li>To define inheritance, the <code class="inline">:</code> symbol is used followed by the superclass name, for example
+							<code class="inline">class Dog : Animal()</code>.
+						</li>
+						<li>If a superclass has a <em>non-default</em> constructor, you must call <code class="inline">super()</code> method in the subclass constructor.</li>
+						<li>
+							You can mark methods and attributes of a superclass as <code class="inline">protected</code>.
+							This will make them only accessible within the same package or within subclass.
+						</li>
+						<li>You can reference fields and methods in the superclass class using the <code class="inline">super</code> keyword.</li>
+						<li>To prevent inheritance, you can mark the class with <code class="inline">final</code> modifier.</li>
+					</ul>
+					<p>
+						<em>Let's have a look at this in detail ...</em>
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Inheritance</h3>
+				<div class="content">
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun main() {
+								val cat = Cat("meow")
+								cat.makeSound()
+
+								val dog = Dog()
+								dog.makeSound()
+
+								// this would not compile, because makeRawSound is protected
+								// dog.makeRawSound();
+
+								val bird = Bird("tweet")
+								bird.makeSound()
+							}
+						</code>
+					</pre>
+				</div>
+				<div class="content">
+					<table>
+						<tbody>
+						<tr>
+							<td>
+								<strong>Animal</strong> is base class for all animals.
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										open class Animal(private val sound: String) {
+
+											fun makeSound() {
+												println(sound)
+											}
+
+											protected fun makeRawSound() {
+												println(sound)
+											}
+										}
+									</code>
+								</pre>
+								<strong>BarkingAnimal</strong> extends <strong>Animal</strong> and adds a bark method.
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										open class BarkingAnimal : Animal("woof") {
+
+											fun bark() {
+												makeRawSound()
+											}
+										}
+									</code>
+								</pre>
+							</td>
+							<td>
+								Cat extends <strong>Animal</strong> and overrides the sound.
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										class Cat(sound: String) : Animal(sound)
+									</code>
+								</pre>
+								<strong>Dog</strong> extends <strong>BarkingAnimal</strong> and does not override the sound.
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										class Dog : BarkingAnimal()
+									</code>
+								</pre>
+								<strong>Bird</strong> extends <strong>Animal</strong> and adds an alternative constructor.
+								Notice the use of <code class="inline">super</code>.
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										class Bird : Animal {
+
+											constructor(song: String) : super(song)
+
+										}
+									</code>
+								</pre>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+			<section>
+				<h3>Inheritance</h3>
+				<div class="summary">
+					You can use the <code class="inline">final</code> modifier to prevent method overriding or class inheritance.
+				</div>
+				<div class="content">
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							open class Cat {
+
+								final fun meow() {
+									System.out.println("meow");
+								}
+
+							}
+						</code>
+					</pre>
+					<p>
+						We are trying to override the <code class="inline">meow</code> method, the compiler will throw an error.
+					</p>
+					<pre style="border: 2px red solid;">
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							class MyCat: Cat() {
+
+
+								// This will not compile
+								override fun meow() { }
+
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Pros of inheritance</h3>
+				<div class="content">
+					<p>
+						<span class="highlight block">Promotes code reuse</span>
+						Inheritance allows subclasses to inherit methods and fields from superclasses which leads to a reduction in code duplication.
+					</p>
+					<p>
+						<span class="highlight block">Promotes polymorphism</span>
+						Subclasses can redefine certain methods based on their requirement.
+					</p>
+					<p>
+						<span class="highlight block">Hierarchy and organization</span>
+						Inheritance helps to design the software in a hierarchical manner where classes with general characteristics are at a higher level and classes with specific characteristics are at lower level.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h4>Cons of inheritance</h4>
+				<div class="content">
+					<p>
+						<span class="highlight block">Tight coupling</span>
+						A subclass is tightly coupled with its superclass. If the superclass is modified, subclasses could be affected, as they inherit methods and fields from the superclass.
+					</p>
+					<p>
+						<span class="highlight block">Inheritance chain</span>
+						Inheritance often leads to long chains which could make tracking down errors in the code difficult.
+					</p>
+					<p>
+						<span class="highlight block">Issues with multiple inheritance</span>
+						Kotlin does not support multiple inheritance (a class can’t extend more than one class).<br />
+						However, it supports multiple interface implementation, which is a partial workaround for this issue.
+					</p>
+					<p>
+						<span class="highlight block">Memory overhead</span>
+						When a subclass object is created, a separate memory space is reserved for it in addition
+						to the separate memory space reserved for the superclass object. This might result in
+						memory wastage if the subclass makes limited use of the superclass's features.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Composition</h3>
+				<div class="summary">
+					Composition provides a <em>"has-a"</em> relationship.
+					It allows you to use object instances as fields within the other classes.
+				</div>
+				<div class="content">
+					<h4>Pros</h4>
+					<ul>
+						<li>Results in loose coupling and improves encapsulation, because the contained objects can be easily swapped without changing the code that uses them.</li>
+						<li>Can be used to overcome lack of multiple inheritance in Kotlin.</li>
+						<li>Usually allows for better testability as well.</li>
+					</ul>
+				</div>
+				<div class="content">
+					<h4>Cons</h4>
+					<ul>
+						<li>It can result in bloated classes if overused, and requires more code setup than inheritance.</li>
+						<li>it can be more difficult to use when requests must be delegated to the appropriate class.</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Composition</h3>
+				<div class="content">
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun main() {
+								val cat = Cat("Garfield")
+								cat.meow()
+							}
+						</code>
+					</pre>
+				</div>
+				<div class="content">
+					<table style="width: 100%">
+						<tbody>
+						<tr>
+							<td>
+								Composed class
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										class Cat(val name: String) {
+
+											private val sound = Sound("meow")
+
+											fun meow() {
+												sound.makeSound()
+											}
+										}
+
+									</code>
+								</pre>
+							</td>
+							<td>
+								Composition class
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										class Sound(private val sound: String) {
+
+											fun makeSound() {
+												println(sound)
+											}
+										}
+									</code>
+								</pre>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+			<section>
+				<h3>Composition and Inheritance</h3>
+<!--				<div class="summary">-->
+<!--					Both inheritance and composition have their strengths and weaknesses-->
+<!--					and deciding when to use each-->
+<!--					can be instrumental for designing cleaner and more effective code.-->
+<!--					<br />-->
+<!--					<br />-->
+<!--					The two techniques can be, and often are, combined.-->
+<!--				</div>-->
+				<div class="content">
+					<blockquote>
+						Both inheritance and composition have their strengths and weaknesses.
+						Deciding when to use each
+						can be instrumental for designing cleaner and more effective code.
+						<br />
+						<br />
+						<strong>The two techniques can be, and often are, combined.</strong>
+					</blockquote>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun main() {
+								val cat = Cat("Garfield", Sound("meow"))
+								cat.makeSound()
+							}
+						</code>
+					</pre>
+					<table style="width: 100%">
+						<tbody>
+						<tr>
+							<td>
+								Superclass - adding Sound through composition
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										open class Animal(private val sound: Sound) {
+											fun makeSound() {
+												sound.makeSound()
+											}
+										}
+									</code>
+								</pre>
+								Composed class - has no dependencies
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										class Sound(private val sound: String) {
+											fun makeSound() {
+												println(sound)
+											}
+										}
+									</code>
+								</pre>
+							</td>
+							<td>
+								Subclass extending Animal
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										class Cat(val name: String, sound: Sound) : Animal(sound)
+									</code>
+								</pre>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Polymorphism</h2>
+				<p></p>
+			</section>
+			<section>
+				<h3>What is polymorphism</h3>
+				<div class="summary">
+					In programming, polymorphism allows us to define one interface or method that can have multiple implementations.
+					It means that the same method or property could exhibit different behavior in different instances of object implementing given interface.
+				</div>
+				<div class="content content-center content-100">
+					<br />
+					<h4>There are two types of polymorphism</h4>
+					<ul>
+						<li>Compile-Time polymorphism</li>
+						<li>Run-Time polymorphism</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Compile-time polymorphism</h3>
+				<div class="summary">
+					Also known as static polymorphism
+				</div>
+				<div class="content">
+					<p>
+						Compile-time polymorphism is achieved through <strong>method overloading</strong>.
+						The correct method to call is determined by the compiler at compile time based on the method signature.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+						fun main() {
+
+							val result1 = Calculator.add(10, 20)
+							val result2 = Calculator.add(10, 20, 30)
+
+							println(result1)    // prints 30
+							println(result2)    // prints 60
+						}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+						object Calculator {
+
+							// method with 2 parameters
+							fun add(a: Int, b: Int): Int {
+								return a + b
+							}
+
+							// overloaded method with 3 parameters
+							fun add(a: Int, b: Int, c: Int): Int {
+								return a + b + c
+							}
+						}
+						</code>
+					</pre>
+					<p>
+						<span class="highlight">Method overloading</span> = defining two or more methods in a class with the same name but different <strong>signature</strong>.
+					</p>
+					<p>
+						<span class="highlight">Method signature</span> = combination of the method name, return type and the parameters.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Runtime polymorphism</h3>
+				<div class="summary">
+					Also known as dynamic method dispatch
+				</div>
+				<div class="content">
+					<p>
+						Runtime polymorphism is a process in which a call to an overridden method is resolved at runtime rather than at compile-time.
+						This mechanism allows the Java Virtual Machine (JVM) to decide which method to invoke from the class hierarchy at runtime,
+						based on the type of object.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun main() {
+								val animal0 = Animal()
+
+								val animal1: Animal = Dog() // Animal reference but Dog object
+								val animal2: Animal = Cat() // Animal reference but Cat object
+
+								animal0.makeSound() // prints "(silence)"
+								animal1.makeSound() // prints "woof"
+								animal2.makeSound() // prints "meow"
+							}
+						</code>
+					</pre>
+					<table style="width: 100%">
+						<tbody>
+						<tr>
+							<td>
+								Superclass
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										open class Animal {
+											open fun makeSound() {
+												println("(silence)")
+											}
+										}
+									</code>
+								</pre>
+							</td>
+							<td>
+								Subclass 1
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										class Dog : Animal() {
+											override fun makeSound() {
+												println("woof")
+											}
+										}
+									</code>
+								</pre>
+								Subclass 2
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										class Cat : Animal() {
+											override fun makeSound() {
+												println("meow")
+											}
+										}
+									</code>
+								</pre>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Abstraction</h2>
+				<em>Abstract classes and Interfaces</em>
+			</section>
+			<section>
+				<h3>Abstract class</h3>
+				<div class="summary">
+					Abstract is defined using the <code class="inline">abstract</code> keyword <br />
+					and are used to define common behavior that can be inherited by subclasses.
+
+				</div>
+				<div class="content">
+					<p>
+						Abstract class cannot be instantiated directly. The main purpose of an abstract class is encapsulating common behavior that can be shared among multiple subclasses,
+						while allowing each subclass to implement its own behavior either by overriding abstract methods, adding new methods or fields, or overriding non-abstract methods.
+					</p>
+					<ul>
+						<li>Abstract classes can have constructors, but they cannot be directly instantiated.</li>
+						<li>They can contain both abstract and non-abstract methods.</li>
+						<li>Abstract methods must be implemented by subclasses.</li>
+						<li>Non-abstract methods can be optionally overridden by subclasses.</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Abstract class</h3>
+				<div class="content">
+					<div class="row">
+						<pre>
+							<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+								fun main() {
+									val cat: Animal = Cat("meow") // Animal reference but Cat object
+									cat.makeSound()
+								}
+							</code>
+						</pre>
+						<div class="column">
+							Abstract class definition
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									/**
+									 * Abstract class definition.
+									 */
+									abstract class Animal(
+										protected val sound: String // notice the protected modifier
+									) {
+
+										/*
+										Abstract method definition, which a subclass must implement.
+										*/
+										abstract fun makeSound()
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							Abstract class implementation
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									/**
+									 * Subclass of Animal.
+									 * Compiler will force us to call superclass constructor!
+									 */
+									class Cat(sound: String): Animal(sound) {
+
+										/*
+										Compiler will force us to use override keyword!
+										*/
+										override fun makeSound() {
+											println(this.sound) // referencing sound in 'this' instance
+										}
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h3>Interfaces</h3>
+				<div class="summary">
+					Interface is a reference type (like class) defined with the <code class="inline">interface</code> modifier.
+				</div>
+				<div class="content">
+					<p>
+						In Kotlin, an interface is a reference type similar to a class. It can contain abstract methods and properties, as well as default method implementations.
+						Interfaces cannot store state and cannot have constructors. They are used to define a contract that classes can implement.
+					</p>
+					<p>
+						Therefore, interface cannot be directly instantiated, just like abstract class. You could say interface is a 100% abstract class.
+					</p>
+					<ul>
+						<li>Interfaces are declared using the <code class="inline">interface</code> keyword.</li>
+						<li>All methods in an interface are abstract by default, but they can also have default implementations.</li>
+						<li>Interfaces can contain properties, but these properties must be abstract or have default implementations.</li>
+						<li>A class implements an interface using the <code class="inline">:</code> symbol followed by the interface name.</li>
+						<li>A class can implement multiple interfaces, allowing for a form of multiple inheritance.</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Interfaces</h3>
+				<div class="content">
+					<div class="row">
+						<pre>Example:
+							<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+								fun main() {
+									val cat: Animal = Cat() // Animal reference but Cat object
+
+									cat.makeSound()
+
+									val distance = 3.2
+									val movementTime = cat.move(distance)
+
+									println("Cat move $distance m in $movementTime s")
+								}
+							</code>
+						</pre>
+						<div class="column">
+							Interface
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									interface Animal {
+
+										fun makeSound()
+
+										fun move(double distance): Double
+
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							Implementation
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class Cat : Animal {
+
+										override fun makeSound() {
+											println("meow")
+										}
+
+										fun move(double distance): Double {
+											double speed = 2.0
+											return distance / speed
+										}
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h3>Interfaces</h3>
+				<div class="summary">
+					You can also implement multiple interfaces at once.
+				</div>
+				<div class="content">
+					<div class="row">
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									fun main() {
+										val cat: Animal = Cat() // Animal reference but Cat object
+
+										cat.makeSound()
+
+										val distance = 3.2
+										val movementTime = cat.move(distance)
+
+										println("Cat move $distance m in $movementTime s")
+									}
+								</code>
+							</pre>
+
+						<div class="column">
+							Moving interface
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									interface Moving {
+
+										fun move(double distance): Double
+
+									}
+								</code>
+							</pre>
+							Vocalizing interface
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									interface Vocalizing {
+
+										fun makeSound()
+
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							Implementation of both Moving and Vocalizing
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class Cat : Moving, Vocalizing {
+
+										override fun makeSound() {
+											println("meow")
+										}
+
+										fun move(double distance): Double {
+											double speed = 2.0
+											return distance / speed
+										}
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h3>Interfaces</h3>
+				<div class="summary">
+					You can also extend interface with other interfaces.
+					The concrete class that implements such interface will be required to implement all abstract methods.
+				</div>
+				<div class="content">
+					<div class="row">
+						<div class="column">
+							Animal interface
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									interface Animal extends Moving, Vocalizing {
+
+										fun eat(String food)
+
+									}
+								</code>
+							</pre>
+							Moving interface
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									interface Moving {
+
+										fun move(double distance): Double
+
+									}
+								</code>
+							</pre>
+							Vocalizing interface
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									interface Vocalizing {
+
+										fun makeSound()
+
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							Implementation of Animal
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class Cat : Animal {
+
+										override fun makeSound() {
+											println("meow")
+										}
+
+										override fun move(double distance): Double {
+											double speed = 2.0
+											return distance / speed
+										}
+
+										override fun eat(String food) {
+											println("eats " + food)
+										}
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Exceptions</h2>
+				<em>and error handling</em>
+			</section>
+			<section>
+				<h3>What is an Exception</h3>
+				<div class="summary">
+					Exceptions are events that disrupt the normal flow of program execution.
+				</div>
+				<div class="content">
+					<ul>
+						<li>
+							They can arise due to various types of errors such as IO errors, arithmetic errors, null pointer access, etc.
+						</li>
+						<li>
+							Exception is just another type of Kotlin object:
+							<ul>
+								<li>Exception is an instance of a <code class="inline">Exception</code> class or one of its <strong>subclasses</strong>.</li>
+								<li>There are several subclasses of Exception provided in Kotlin by default, but we can create our own by extending these superclases.</li>
+								<li>There are two types of exceptions: <strong>Checked</strong> or <strong>Unchecked</strong></li>
+							</ul>
+						</li>
+						<li>
+							The Exception object usually carries information about the error that occurred.
+						</li>
+						<li>
+							Exception handling allows us to control the program flow and prevent the program from terminating abruptly, which leads to a more robust and fault-tolerant software.
+						</li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				<h3>Checked Exceptions</h3>
+				<div class="summary">
+					These are exceptional conditions that a well-written application should anticipate and recover from.
+				</div>
+				<div class="content">
+					<p>
+						Checked exceptions are the classes that extend Throwable class except RuntimeException and Error.
+					</p>
+					<p>
+						Checked exceptions are checked at compile-time.
+						The compiler forces the programmer to catch these exceptions, i.e., the programmer needs to provide an exception handling mechanism through a try-catch block or throws keyword for checked exceptions.
+						If not, the code will not compile.
+					</p>
+					<p>
+						For example, <code class="inline">FileNotFoundException</code> will be thrown when a file that needs to be opened cannot be found.
+					</p>
+				</div>
+			</section>
+
+			<section>
+				<h3>Unchecked Exceptions</h3>
+				<div class="summary">
+					These represent defects in the program (bugs), often invalid arguments passed to a non-private method.
+				</div>
+				<div class="content">
+					<p>
+						Unchecked exceptions are the classes that extend RuntimeException class and the Error class.
+					</p>
+					<p>
+						Unchecked exceptions are not checked at compile-time, but at runtime.
+					</p>
+					<p>
+						Examples are <code class="inline">ArrayIndexOutOfBoundsException</code>, <code class="inline">NullPointerException</code>, <code class="inline">ArithmeticException</code>, <code class="inline">NumberFormatException</code> etc.
+					</p>
+				</div>
+				</p>
+			</section>
+
+			<section>
+				<h3>Handling exceptions</h3>
+				<div class="summary">
+					Kotlin provides a standard mechanisms to handle exceptions using <code><strong>try</strong></code>, <code><strong>catch</strong></code>, <code><strong>finally</strong></code> blocks.
+				</div>
+				<div class="content">
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							try {
+								// code that might throw an exception
+							} catch (ex: ExceptionType) {
+								// code to handle the exception
+							} finally {
+								// code that will execute irrespective of an exception occurred or not
+							}
+						</code>
+					</pre>
+					<ul>
+						<li>
+							The <code class="inline">try</code> block contains the code that <strong>might</strong> throw an exception.
+						</li>
+						<li>
+							The <code class="inline">catch</code> block contains the code that is executed when an exception of <strong>given type</strong> occurs in the try block.
+						</li>
+						<li>
+							The <code class="inline">finally</code> block contains the code that is always executed, regardless of whether an exception occurs or not.
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Throwing exceptions</h3>
+				<div class="summary">
+					"Throwing an exception" refers to the process of creating an instance of an Exception (or its subclass) and handing it off to the runtime system to handle.
+<!--					<br />-->
+<!--					<br />-->
+<!--					It's a way of signaling that a method cannot complete its normal computation due to some kind of exceptional condition.-->
+				</div>
+				<div class="content">
+					<p>
+						It's a way of signaling that a method cannot complete its normal computation due to some kind of exceptional condition.
+					</p>
+					<p>
+						There are two keywords associated with throwing exceptions:
+					</p>
+					<ul>
+						<li>
+							The <code class="inline">throw</code> keyword is used to "emit" an exception from any block of code.
+							We can throw either checked or unchecked exceptions.
+						</li>
+						<li>
+							If you want to declare that a method may throw an exception,
+							you can use the <code class="inline">@Throws</code> annotation.
+<!--							The <code><strong>throws</strong></code> keyword is used to declare exceptions.-->
+<!--							It doesn't throw an exception but specifies that there may occur an exception in the method.-->
+						</li>
+						<li>
+							Declaring that a method throws an exception is a way of signaling to the caller that the method may not complete normally, so that the caller can handle it.
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Throwing and handling exceptions</h3>
+				<div class="content">
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun main() {
+								val car = Car(3)
+
+								try {
+									car.drive(4)
+								} catch (e: NoFuelException) { // compiler will force catch block here
+									println(e.message)
+									// somehow handle car out of fuel situation
+								}
+							}
+						</code>
+					</pre>
+					<table style="width: 100%">
+						<tbody>
+						<tr>
+							<td>
+								Class that throws exception
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										 class Car(private var fuelKm: Int) {
+
+											@Throws(NoFuelException::class)
+											fun drive(driveKm: Int) {
+												var driveKm = driveKm
+												while (driveKm > 0) {
+													if (fuelKm <= 0) {
+														// exception in thrown on car out of fuel event
+														throw NoFuelException()
+													} else {
+														println("drove 1 km")
+														fuelKm--
+														driveKm--
+													}
+												}
+											}
+										}
+									</code>
+								</pre>
+							</td>
+							<td>
+								NoFuelException exception definition
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										class NoFuelException : Throwable("The car is out of fuel!")
+									</code>
+								</pre>
+								<p>
+									Running this code will print
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										drove 1 km
+										drove 1 km
+										drove 1 km
+										The car is out of fuel!
+									</code>
+								</pre>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+			<section>
+				<h3>Throwing and handling exceptions</h3>
+				<div class="content">
+					In this example we try to devide number by 0, which is illegal.
+					The compiler will let us compile this code, because there is no checked exception.
+					When executed, the program will end with:
+					<br />
+					<br />
+					<code class="inline">Exception in thread "main" java.lang.ArithmeticException: / by zero</code>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun main() {
+								int number = 100 / 0; // will end with "Exception in thread "main" java.lang.ArithmeticException: / by zero"
+							}
+						</code>
+					</pre>
+					<p>
+						However, we can still handle the unchecked exception too, we are just not warned by the compiler.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun main() {
+								val dividend = 100
+								val divisor = 0
+
+								try {
+									val quotient = dividend / divisor
+								} catch (e: Exception) {
+									println(e.message)
+								}
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Practice</h2>
+			</section>
+		</section>
+	</div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+	// More info about initialization & config:
+	// - https://revealjs.com/initialization/
+	// - https://revealjs.com/config/
+	Reveal.initialize({
+		hash: true,
+
+		// Learn about plugins: https://revealjs.com/plugins/
+		plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+	});
+</script>
+</body>
+</html>

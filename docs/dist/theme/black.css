@@ -80,7 +80,9 @@ section.has-light-background, section.has-light-background h1, section.has-light
 .reveal h5,
 .reveal h6 {
   margin: var(--r-heading-margin);
-  color: var(--r-heading-color);
+  background: linear-gradient(45deg, #7F52FF, #B125EA, #E24462);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-family: var(--r-heading-font);
   font-weight: var(--r-heading-font-weight);
   line-height: var(--r-heading-line-height);
@@ -106,8 +108,12 @@ section.has-light-background, section.has-light-background h1, section.has-light
   font-size: var(--r-heading4-size);
 }
 
-.reveal h1 {
+.reveal h1,
+.reveal h2 {
   text-shadow: var(--r-heading1-text-shadow);
+  background: none;
+  -webkit-background-clip: revert;
+  -webkit-text-fill-color: revert;
 }
 
 /*********************************************
@@ -200,14 +206,13 @@ section.has-light-background, section.has-light-background h1, section.has-light
 .reveal blockquote {
   display: block;
   position: relative;
-  width: 70%;
   margin: var(--r-block-margin) auto;
   padding: 20px;
+  width: 70%;
   width: 100%;
   font-style: italic;
-  background: lightgreen;
+  background: var(--kotlin-gradient-50);
   border-radius: 8px;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
 }
 
 .reveal blockquote p:first-child,
@@ -371,11 +376,6 @@ section.has-light-background, section.has-light-background h1, section.has-light
     background-color: var(--r-background-color);
   }
 }
-.reveal .subheader {
-  font-size: 120%;
-  font-style: italic;
-}
-
 .reveal .column {
   float: left;
   width: 50%;
@@ -389,6 +389,61 @@ section.has-light-background, section.has-light-background h1, section.has-light
 }
 
 .reveal code.inline {
-  color: darkblue;
+  color: var(--kotlin-color-3);
+  font-weight: normal;
+  background: whitesmoke;
+  font-size: 80%;
+}
+
+.reveal .summary {
+  font-style: italic;
+  color: var(--kotlin-color-4);
+  font-weight: bolder;
+  width: 100%;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border-top: 1px lightgrey solid;
+}
+
+.reveal .content {
+  text-align: left;
+  font-size: 80%;
+  padding-top: 14px;
+  border-top: 1px lightgrey solid;
+}
+
+.reveal .content-center {
+  text-align: center;
+}
+
+.reveal .content-100 {
+  font-size: 100%;
+}
+
+.reveal .highlight {
+  color: var(--kotlin-color-1);
   font-weight: bold;
+}
+
+.reveal .block {
+  display: block;
+  padding-bottom: 8px;
+}
+
+.reveal hr {
+  border-top: 1px lightgrey solid;
+}
+
+section[data-background-gradient="var(--kotlin-gradient)"] * {
+  color: white;
+}
+
+::-moz-selection { /* Code for Firefox */
+  color: red;
+  background: yellow;
+}
+
+::selection {
+  color: red;
+  background: yellow;
 }

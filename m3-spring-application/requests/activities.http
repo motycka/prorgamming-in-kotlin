@@ -1,0 +1,21 @@
+GET http://localhost:8084/api/activities
+Authorization: Basic 0
+
+###
+GET http://localhost:8084/api/activities/USER
+Authorization: Basic 1
+
+###
+POST http://localhost:8084/api/activities
+Content-Type: application/json
+Authorization: Basic 1
+
+{
+  "name": "Test Activity",
+  "type": "USER",
+  "kcalPerMinute": 7.0
+}
+
+###
+DELETE http://localhost:8084/api/activities/6
+Authorization: Basic 1

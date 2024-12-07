@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>reveal.js</title>
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/kotlin.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/vs.css">
+</head>
+<body>
+<div class="reveal">
+	<div class="slides">
+		<section data-background-gradient="var(--kotlin-gradient)">
+			<i>Week 3 | Lesson 12</i>
+			<h1>Spring Boot Application</h1>
+			<em>Controller Layer (REST)</em><br />
+			<em>Service Layer</em><br />
+			<em>Testing</em><br />
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Controller</h2>
+			</section>
+			<section>
+				<h3>Controller</h3>
+				<div class="summary">
+					The REST controller layer is responsible for handling the HTTP requests,
+					passing them to the service layer, retrieving the results from the service layer,
+					and returning HTTP responses.
+				</div>
+				<div class="content">
+					<p>
+						The REST Controller ...
+					</p>
+					<ul>
+						<li>
+							Defines methods and paths to resources
+							<ul>
+								<li>Path parameters</li>
+								<li>Query parameters</li>
+							</ul>
+						</li>
+						<li>
+							Receives request from client and passes it to services
+							<ul>
+								<li>Handles deserialize/serialization of request/response body</li>
+								<li>May do some error handling</li>
+							</ul>
+						</li>
+						<li>
+							Receives results from services and returns it to client
+							<ul>
+								<li>Returns HTTP status and response body</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>REST Controller</h3>
+				<div class="content">
+					<p>
+						Annotation <code class="inline">@RestController</code> is used to define a class as a REST controller and
+						<code class="inline">@RequestMapping</code> is used to define the root path to the resource.
+					</p>
+					<p>
+						Any dependencies are injected into the controller using, constructor injection, setter injection, or field injection.
+					</p>
+					<p>
+						Here is an example with constructor injection, which is the recommended way.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							package com.harbourspace.tracker.user
+
+							import com.harbourspace.tracker.user.model.NewUser
+							import com.harbourspace.tracker.user.model.User
+							import org.springframework.http.HttpStatus
+							import org.springframework.http.ResponseEntity
+							import org.springframework.web.bind.annotation.*
+
+							@RestController
+							@RequestMapping("/api/users")
+							class UserController(
+								private val userService: UserService
+							) {
+
+								// controller methods ...
+
+							}
+						</code>
+					</pre>
+					<p>
+						Additional annotations are available, see Spring Boot documentation if you want to learn more.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>REST Controller</h3>
+				<div class="content">
+					<p>
+						Each method within the controller class is annotated with either
+						<code class="inline">@GetMapping</code>, <code class="inline">@PostMapping</code>, <code class="inline">@PutMapping</code>,
+						<code class="inline">@DeleteMapping</code>, or <code class="inline">@PatchMapping</code>, ith optional sub-path to the resource.
+						This defines the HTTP method that the class method handles, and the path to the resource.
+					</p>
+					<p>
+						This method defined <strong>GET</strong> method on resource <code class="inline">/api/users</code>
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							@GetMapping
+							fun getUsers(): List&lt;User&gt; {
+
+								// service calls ...
+
+							}
+						</code>
+					</pre>
+					<p>
+						This method defined <strong>PUT</strong> method on resource <code class="inline">/api/users/{id}</code>
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							@PutMapping("/{id}")
+							fun getUser(@PathVariable("id") id: Long): User {
+
+								// service calls ...
+
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>REST Controller</h3>
+				<div class="content">
+					<p>
+						Methods may declare path parameters or query parameters, and may return the response body and the HTTP status.
+						Path parameters are defined using <code class="inline">@PathVariable</code> annotation,
+						and query parameters are defined using <code class="inline">@RequestParam</code> annotation.
+					</p>
+					<p>
+						Responses may be returned as is, or using <code class="inline">ResponseEntity</code> class.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							@GetMapping("/{id}")
+							fun getUser(
+								@PathVariable("id") id: Long
+							): ResponseEntity&lt;User&gt; {
+
+								// service calls ...
+
+							}
+
+							@GetMapping()
+							fun getUsers(
+								@RequestParam("page") page: Int,
+								@RequestParam("size") size: Int
+							): ResponseEntity&lt;User&gt; {
+
+								// service calls ...
+
+							}
+
+							@PostMapping()
+							fun postUser(
+								@RequestBody user: NewUser
+							): ResponseEntity&lt;User&gt; {
+
+								// service calls ...
+
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>REST Controller (Final)</h3>
+				<div class="content">
+					<pre>
+						<code>
+							package com.harbourspace.tracker.user
+
+							import com.harbourspace.tracker.user.model.NewUser
+							import com.harbourspace.tracker.user.model.User
+							import org.springframework.http.HttpStatus
+							import org.springframework.http.ResponseEntity
+							import org.springframework.web.bind.annotation.*
+
+							@RestController
+							@RequestMapping("/api/users")
+							class UserController(
+								private val userService: UserService
+							) {
+
+								@GetMapping
+								fun getUsers(): ResponseEntity&lt;List&lt;User&gt;&gt; {
+									return ResponseEntity.ok(userService.getUsers())
+								}
+
+								@GetMapping("{id}")
+								fun getUserById(@PathVariable("id") id: Long): ResponseEntity&lt;User&gt; {
+									return ResponseEntity.ok(userService.getUserById(id));
+								}
+
+								@PostMapping
+								fun createUser(@RequestBody user: NewUser): ResponseEntity&lt;User&gt; {
+									return ResponseEntity(userService.createUser(user), HttpStatus.CREATED);
+								}
+
+								@PutMapping("{id}")
+								fun updateUser(
+									@PathVariable("id") id: Long,
+									@RequestBody user: User
+								): ResponseEntity&lt;User> {
+									return ResponseEntity.ok(userService.updateUser(user.copyWithId(id)));
+								}
+
+								@DeleteMapping("{id}")
+								fun deleteUser(@PathVariable("id") id: Long): ResponseEntity&lt;Object&gt; {
+									userService.deleteUser(id)
+									return ResponseEntity.ok().build()
+								}
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Service</h2>
+			</section>
+			<section>
+				<h3>Service</h3>
+				<div class="summary">
+					The service layer in an MVC application is the layer that contains the <strong>business logic</strong>.
+				</div>
+				<div class="content">
+					<p>
+						This layer is responsible for understanding the requests from the controller layer,
+						making appropriate calls to the repository layer or other services, processing the data,
+						and then and returning the result back to the controller layer (if applicable).
+					</p>
+					<p>
+						Services will often use the repository layer to retrieve and store data and call other services to fulfill the requests.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							package com.harbourspace.tracker.user
+
+							import com.harbourspace.tracker.authorization.AuthorizationService
+							import com.harbourspace.tracker.user.model.User
+							import org.springframework.stereotype.Service
+
+							@Service
+							class UserService(
+								private val userRepository: UserRepository,
+								private val authorizationService: AuthorizationService
+							) {
+
+								fun getUsers(): List&lt;User&gt; {
+									// implemented getUsers method
+								}
+
+								// other service methods
+
+							}
+						</code>
+					</pre>
+					<blockquote>
+						<strong>Business logic</strong> = the code that implements the business rules and requirements.
+						In other words, the code that fulfills the customers needs and requirements should be placed in the service layer.
+					</blockquote>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Testing</h2>
+				<div style="background-color: yellow">TODO</div>
+			</section>
+			<section>
+				<h3>Testing</h3>
+				<div class="summary">
+					Spring Boot also provides support for testing the application on each of the layers (controller, service, and repository).
+				</div>
+				<div class="content">
+					<p>
+						Testing each layer separately helps to make sure good separation of concerns and to make sure that each layer works as expected.
+					</p>
+					<p>
+						It is also good, however, to test the application as a whole, to make sure that all the layers work together as expected.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Mocking and spying</h3>
+				<div class="summary">
+					Mocking and spying are techniques used in testing to simulate the behavior of the objects that the class under test depends on.
+				</div>
+				<div class="content">
+					<p>
+						In other words, we can control the internal behavior of the dependencies form the tests.
+					</p>
+					<p>
+						The "poor man's" version of mocking can be when we crate an alternative implementation of the class that is a dependency of the class under test.
+					</p>
+					<p>
+						In reality, we use mocking frameworks, such as Mockito or MockK, to create mock objects and spy objects.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Testing Controllers</h3>
+				<div class="content">
+				<div class="row">
+						<p>
+							Testing controllers is relatively simple, because they are just classes that handle the HTTP
+							requests and return the HTTP responses. However, we need some tools to simulate the HTTP
+							requests and responses.
+						</p>
+						<div class="column" style="width: 70%">
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin" style="font-size: 80%">
+										@WebMvcTest(HelloController.class)
+										public class HelloControllerTest {
+
+											@MockBean
+											private HelloService helloService;
+
+											@Autowired
+											private MockMvc mockMvc;
+
+											private final String path = "/api/hello";
+											private final String name = "Monika";
+											private final String locale = "es";
+											private final String expected = "Hola Monika!";
+
+											@BeforeEach
+											void setUp() {
+												Mockito.when(helloService.sayHello(name, locale)).thenReturn(expected);
+											}
+
+											@Test
+											@DisplayName("GET /api/hello?name={name}&locale={locale} - should responds with 200")
+											void testHelloController() throws Exception {
+												mockMvc.perform(get(path + "?name=" + name + "&locale=" + locale))
+														.andDo(print())
+														.andExpect(status().isOk())
+														.andExpect(content().string(containsString(expected)));
+											}
+
+											@Test
+											@DisplayName("GET /api/hello - should responds with 400")
+											void testHelloControllerMissingParameters() throws Exception {
+												mockMvc.perform(get(path))
+														.andDo(print())
+														.andExpect(status().isBadRequest());
+											}
+
+										}
+								</code>
+							</pre>
+						</div>
+						<div class="column" style="font-size: 70%; width: 30%">
+							<ul>
+								<li>
+									Spring Boot provides the <code>MockMvc</code> class to simulate the HTTP requests and responses.
+								</li>
+								<li>
+									<code>@WebMvcTest</code> annotation with the controller class to be tested will establish a Spring context.
+								</li>
+								<li>
+									<code>@Autowired</code> annotation is used to inject the <code>MockMvc</code> bean into the test class.
+								</li>
+								<li>
+									Ideally, we want to test just the controller, but not the service and repository layers,
+									so we can use the <code>@MockBean</code> annotation to mock the service and repository beans.
+								</li>
+								<li>
+									We can mock the service layer using any mocking library, such as Mockito.
+									In this case we use <code>Mockito.when</code> to mock the service method.
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h3>Testing Services</h3>
+				<p>
+					Testing the service layer is perhaps the easiest, because we only need to mock the repository layer.
+					There are multiple approaches you can take.
+				</p>
+				<div class="row" style="font-size: 80%">
+					<div class="column">
+						Either you can test the service layer using Spring Boot's dependency injection,
+						<pre>
+							<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+								@SpringBootTest
+								public class HelloServiceTest {
+
+									@MockBean
+									private HelloRepository helloRepository;
+
+									@Autowired
+									private HelloService helloService;
+
+									@Test
+									@DisplayName("should return localized hello")
+									public void testHelloService() {
+										Mockito.when(helloRepository.selectHelloInLanguage("en"))
+											.thenReturn("Hello");
+
+										String result = helloService.sayHello("Monika", "en");
+										assertEquals("Hello Monika!", result);
+
+										Mockito.verify(helloRepository)
+											.selectHelloInLanguage("en");
+									}
+
+								}
+							</code>
+						</pre>
+						The advantage of this is you are testing the service can be injected correctly.
+						The disadvantage is that the test may be slower and more resource consuming.
+					</div>
+					<div class="column">
+						<br />
+						or you can just inject the dependency yourself.
+						<pre>
+							<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+								public class HelloService2Test {
+
+									private final HelloRepository helloRepository =
+										Mockito.mock(HelloRepository.class);
+
+									private final HelloService helloService =
+										new HelloService(helloRepository);
+
+									@Test
+									@DisplayName("should return localized hello")
+									public void testHelloService() {
+										Mockito.when(helloRepository.selectHelloInLanguage("en"))
+											.thenReturn("Hello");
+
+										String result = helloService.sayHello("Monika", "en");
+										assertEquals("Hello Monika!", result);
+
+										Mockito.verify(helloRepository)
+											.selectHelloInLanguage("en");
+									}
+
+								}
+							</code>
+						</pre>
+						This test is going to be faster, but you are not testing the DI,
+						which is not a big deal if you also have integration tests.
+					</div>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Project Work</h2>
+			</section>
+		</section>
+	</div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+	// More info about initialization & config:
+	// - https://revealjs.com/initialization/
+	// - https://revealjs.com/config/
+	Reveal.initialize({
+		hash: true,
+
+		// Learn about plugins: https://revealjs.com/plugins/
+		plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+	});
+</script>
+</body>
+</html>
