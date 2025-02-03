@@ -260,12 +260,67 @@
 					</div>
 				</div>
 			</section>
-
 			<section>
 				<h3>Named arguments</h3>
-				TODO bigger example
-			</section>
+				<div class="content">
+					A bigger example of using named arguments:
+					<div class="row">
+						<div class="column">
+							<pre>
+								<code data-trim data-noescape class="hljs kotlin">
+									fun calculateEvapotranspiration(
+										temperature: Double,
+										solarRadiation: Double,
+										humidity: Double,
+										windSpeed: Double,
+										atmosphericPressure: Double,
+										location: Pair&lt;Double, Double&gt;,
+										time: LocalDateTime,
+										soilType: SoilType,
+										cropType: CropType
+									): Double {
+										// calculation
+									}
+								</code>
+							</pre>
+					</div>
+						<div class="column">
+							Without argument names ...
+							<pre>
+								<code data-trim data-noescape class="hljs kotlin">
+									calculateEvapotranspiration(
+										25.0,
+										800.0,
+										0.6,
+										3.0,
+										1013.25,
+										13.7655756 to 100.5675686,
+										LocalDateTime.now(),
+										SoilType.CLAY,
+										CropType.WHEAT,
+									)
+								</code>
+							</pre>
+							With argument names ...
+							<pre>
+								<code data-trim data-noescape class="hljs kotlin">
+									calculateEvapotranspiration(
+										soilType = SoilType.CLAY,
+										cropType = CropType.WHEAT,
+										time = LocalDateTime.now(),
+										location = 13.7655756 to 100.5675686,
+										temperature = 25.0,
+										solarRadiation = 800.0,
+										humidity = 0.6,
+										windSpeed = 3.0,
+										atmosphericPressure = 1013.25
+									)
+								</code>
+							</pre>
+						</div>
+				</div>
 
+			</section>
 			<section>
 				<h3>Variable Arguments</h3>
 				<div class="summary">
@@ -308,14 +363,7 @@
 					</pre>
 				</div>
 			</section>
-
-			<section>
-				<h3>Functions: Exercise</h3>
-				TODO
-			</section>
-
 		</section>
-
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
 				<h2>Objects and Classes</h2>
@@ -926,7 +974,7 @@
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
 				<h2>Singleton Objects</h2>
-				<em>static classes and constants in Kotlin</em>
+				<em>Static classes and constants in Kotlin</em>
 			</section>
 			<section>
 				<h3>Singleton Objects</h3>
@@ -1108,31 +1156,31 @@
 						</thead>
 						<tbody>
 						<tr>
-							<td><strong><code>public</code></strong></td>
+							<td><strong><code class="inline">public</code></strong></td>
 							<td>accessible from anywhere</td>
 							<td>accessible from anywhere</td>
 							<td>accessible from anywhere</td>
 						</tr>
 						<tr>
-							<td><strong><code>private</code></strong></td>
+							<td><strong><code class="inline">private</code></strong></td>
 							<td>only accessible within the same package</td>
 							<td>only accessible within same class</td>
 							<td>only accessible within same class</td>
 						</tr>
 						<tr>
-							<td><strong><code>protected</code></strong></td>
+							<td><strong><code class="inline">protected</code></strong></td>
 							<td>accessible within the same package</td>
 							<td>only accessible within same class or it's subclass</td>
 							<td>only accessible within same class or it's subclass</td>
 						</tr>
 						<tr>
-							<td><strong><code>internal</code></strong></td>
+							<td><strong><code class="inline">internal</code></strong></td>
 							<td>accessible within the same module</td>
 							<td>accessible within the same module</td>
 							<td>N/A</td>
 						</tr>
 						<tr>
-							<td><strong style="font-style: italic">default</strong></td>
+							<td><span style="font-style: italic">default</span></td>
 							<td>same as public</td>
 							<td>same as public</td>
 							<td>same as public</td>
