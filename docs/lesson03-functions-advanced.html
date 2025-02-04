@@ -19,59 +19,76 @@
 		<section data-background-gradient="var(--kotlin-gradient)">
 			<i>Week 1 | Lesson 3</i>
 			<h1>Functions: Advanced</h1>
-			<em>Nullables</em><br />
-			<em>Lambda Functions</em><br />
+			<em>Anonymous Function & Lambda Expression</em><br />
 			<em>Extension Functions</em><br />
 			<em>Scope Functions</em><br />
-			<em>Kotlin stdlib: Preconditions</em><br />
 		</section>
-<!--		<section>-->
-<!--			<section data-background-gradient="var(&#45;&#45;kotlin-gradient)">-->
-<!--				<h2>Nullables</h2>-->
-<!--			</section>-->
-<!--			<section>-->
-<!--				<h3>Nullables</h3>-->
-<!--				<div class="summary">-->
-<!--					Nullables provide a convenient way to handle null values in Kotlin.-->
-<!--				</div>-->
-<!--				<div class="content">-->
-<!--					<p>-->
-<!--						Variables in Kotlin cannot be null by default. If you want a variable to be nullable, you must declare it as nullable.-->
-<!--					</p>-->
-<!--					<div style="background-color: yellow">TODO</div>-->
-<!--				</div>-->
-<!--			</section>-->
-<!--		</section>-->
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
-				<h2>The Lambda Function</h2>
+				<h2>Anonymous Function & Lambda Expression</h2>
 			</section>
 			<section>
-				<h3>The Lambda Function</h3>
+				<h3>Anonymous Function & Lambda Expression</h3>
 				<div class="summary">
-					Anonymous functions, or lambda functions, are functions that are not declared, but passed immediately as an expression.
+					Anonymous functions and lambda expressions are used to define functions without names.
 				</div>
 				<div class="content">
-					<div style="background-color: yellow">TODO</div>
+					<h4>Lambda Expression</h4>
 					<p>
-						A lambda function in Kotlin is an anonymous function that can be treated as a value. It can be passed as an argument to other functions, returned from other functions, or assigned to variables.
-					</p>
-					<p>
-						The basic syntax of a lambda function is:
+						Lambda expressions are typically used for short, concise functions that are passed as arguments to higher-order functions.
+						They are commonly used in collection operations like <code class="inline"></code>, <code class="inline">filter</code>, and <code class="inline">forEach</code>.
 					</p>
 					<pre>
-						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
 							val lambdaName: (Type) -> ReturnType = { argument: Type -> body }
 						</code>
 					</pre>
+					<blockquote>If lambda expression has a single parameter, you can use the default name <code class="inline">it</code>.</blockquote>
+					<br />
+					<h4>Anonymous Function</h4>
 					<p>
-						Here, a lambda function is assigned to a variable <code class="inline">greet</code> that takes an argument of type <code class="inline">String</code> and prints a greeting message.
+						Anonymous functions are used when you need more control over the function's return type or when you need to use the <code class="inline">return</code> statement to exit the function itself rather than the enclosing function.
 					</p>
 					<pre>
-						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
-							val greet: (String) -> Unit = { name: String -> println("Hello, $name!") }
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val lambdaName = fun(name: Type): Type {
+								return value
+							}
+						</code>
+					</pre>
+					<blockquote>
+						Opposite of anonymous function is called a named function.
+					</blockquote>
+				</div>
+			</section>
+			<section>
+				<h3>Lambda Expression</h3>
+				<div class="summary">
+					Examples
+				</div>
+				<div class="content">
+					<p>Function with one parameter and no return value:</p>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val greet: (String) -> Unit = { name -> println("Hello, $name!") }
 
-							greet("World") // Output: Hello, World!
+							greet("World")
+						</code>
+					</pre>
+					<p>If lambda expression has a single parameter, you can use the default name <code class="inline">it</code>:</p>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val greet: (String) -> Unit = { println("Hello, $it!") }
+
+							greet("World")
+						</code>
+					</pre>
+					<p>Function with two parameters and a return value:</p>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val multiply: (Int, Int) -> Int = { a, b -> a * b }
+
+							val result = multiply(10, 20)
 						</code>
 					</pre>
 					<p>
@@ -81,29 +98,124 @@
 						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
 							val cities = listOf("Bangkok", "Barcelona", "Tokyo", "London", "New York")
 
-							cities.forEach {
-								println(it)
+							cities.forEach { city ->
+								println(city)
 							}
 						</code>
 					</pre>
 				</div>
 			</section>
 			<section>
-				<h3>The Lambda Function</h3>
+				<h3>Anonymous Function</h3>
+				<div class="summary">
+					Examples
+				</div>
+				<div class="content">
+					Anonymous function with one parameter and no return value:
+					<pre>
+							<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+								val greet = fun(name: String) {
+									println("Hello, $name!")
+								}
+
+								greet("World")
+							</code>
+						</pre>
+					Anonymous function with two parameters and a return value:
+					<pre>
+							<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+								val multiply = fun(a: Int, b: Int): Int {
+									return a * b
+								}
+
+								val result = multiply(10, 20)
+							</code>
+						</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Anonymous Function & Lambda Expression</h3>
+				<div class="summary">
+					Usage
+				</div>
 				<div class="content">
 					<p>
-						The main use of lambda functions is to pass them as arguments to higher-order functions.
+						In summary, lambda expressions are more concise and are typically used for simpler functions,
+						while anonymous functions provide more flexibility with explicit return types and return behavior.
+					</p>
+					<p>
+						There are few use cases for lambda expressions and anonymous functions:
+					</p>
+					<ul>
+						<li>Passing functions as arguments to higher-order functions</li>
+						<li>Returning functions from other functions</li>
+						<li>Defining local functions that are not needed outside the scope of the enclosing function</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Anonymous Function & Lambda Expression</h3>
+				<div class="summary">
+					Usage
+				</div>
+				<div class="content">
+					<p>
+						In this example, the <code class="inline">operation</code> function takes two integers and a lambda function as arguments.
 					</p>
 					<pre>
-						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
 							fun operation(x: Int, y: Int, func: (Int, Int) -> Int): Int {
 								return func(x, y)
 							}
+						</code>
+					</pre>
+					<p>
+						The most common use way pass the function argument is:
+					</p>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val result = operation(10, 20) { x, y -> x + y }
+						</code>
+					</pre>
+					<p>
+						Another possibility is to pass a function reference (it can be a named function or a member function):
+					</p>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val multiply: (Int, Int) -> Int = { a, b -> a * b }
 
-							val sum = operation(10, 20) { x, y -> x + y }
+							val result = operation(10, 20, multiply)
 						</code>
 					</pre>
 				</div>
+			</section>
+			<section>
+				<h3>Anonymous Function & Lambda Expression</h3>
+				<div class="summary">
+					Usage
+				</div>
+				<div class="content">
+					<p>
+						You can also return functions from other functions.
+					</p>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun getCalculator(): (Int, Long, Double) -> Double {
+								return { a, b, c -> a + b + c }
+							}
+						</code>
+					</pre>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val calculator = getCalculator()
+
+							val result = calculator(1, 2, 3.0)
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Exercise</h3>
 			</section>
 		</section>
 		<section>
@@ -111,16 +223,182 @@
 				<h2>Extension Functions</h2>
 			</section>
 			<section>
-				<h3>Extension Functions</h3>
+				<h3>Extension functions</h3>
 				<div class="summary">
-					Extension functions allow you to add new functions to existing classes without modifying the class.
+					Extension functions allow adding new methods to existing classes without modifying their source code.
 				</div>
 				<div class="content">
-					<div style="background-color: yellow">TODO</div>
-					<p>
-
-					</p>
+					<div>
+						<p>
+							Extension functions are one of the most powerful and popular features of Kotlin.
+							You define an extension function by prefixing the function name with the type you want to extend.
+						</p>
+					</div>
+					<br />
+					<div>
+						<strong>Benefits of extension functions include:</strong>
+						<ul>
+							<li>Adding new functionality to existing classes which you may not have access to.</li>
+							<li>Using extension functions to create a more fluent API and DSLs.</li>
+							<li>Improving readability and maintainability of code by encapsulating and naming logic in extension functions.</li>
+							<li>Using extension functions to transform objects into other objects.</li>
+						</ul>
+					</div>
 				</div>
+			</section>
+			<section>
+				<h3>Extension functions: Examples</h3>
+				<div class="summary">
+					Adding new functionality to existing classes which you may not have access to.
+				</div>
+				<div class="content">
+					<p>
+						For example, you can add a new method to the <code class="inline">String</code> class to capitalize the first letter of each word in a sentence.
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							fun String.capitalizeWords(): String {
+								return this.split(" ").joinToString(" ") { it.capitalize() }
+							}
+						</code>
+					</pre>
+					<p>
+						You can then use this extension function on any <code class="inline">String</code> object.
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							fun main() {
+								val sentence = "hello world from kotlin"
+								println(sentence.capitalizeWords()) // Output: "Hello World From Kotlin"
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Extension functions: Examples</h3>
+				<div class="summary">
+					Using extension functions to create a more fluent API and DSLs.
+				</div>
+				<div class="content">
+					<p>
+						You can use extension functions to create a more fluent API by adding methods to existing classes that allow you to chain method calls together.
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							data class Person(
+								val name: String,
+								val age: Int,
+								val country: String
+							)
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							fun List&lt;Person&gt;.filterByCountry(country: String): List&lt;Person&gt; {
+								return this.filter { it.country.lowercase() == country.lowercase()) }
+							}
+
+							fun List&lt;Person&gt;.sortByName(): List&lt;Person&gt; {
+								return this.sortedBy { person -> person.name }
+							}
+						</code>
+					</pre>
+					<p>
+						You can then use these extension functions to create a more readable and expressive code.
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							val people = listOf(
+								// list of people
+							)
+
+							val filteredPeople = people
+								.filterByCountry("Thailand")
+								.sortByName()
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Extension functions: Examples</h3>
+				<div class="summary">
+					Improving readability and maintainability of code by encapsulating and naming logic in extension functions.
+				</div>
+				<div class="content">
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							data class Person(
+								val name: String,
+								val age: Int,
+								val country: String
+							)
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							fun Person.canDrinkBeer(): Boolean {
+								val legalAge = when (country) {
+									"USA" -> 21
+									else -> 18
+								}
+								return age >= legalAge
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							fun main() {
+								val person = Person("John", 21, "USA")
+								println("${person.name} can drink beer: ${person.canDrinkBeer()}")
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Extension functions: Examples</h3>
+				<div class="summary">
+					Using extension functions to transform objects into other objects.
+				</div>
+				<div class="content">
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							data class Person(
+								val name: String,
+								val age: Int,
+								val country: String
+							)
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							data class Student(
+								val name: String,
+								val country: String,
+								val dateEnrolled: LocalDate
+							)
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							fun Person.toStudent() = Student(
+								name = name,
+								country = country,
+								dateEnrolled = LocalDate.now()
+							)
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							val person = Person("John", 21, "USA")
+    						val student = person.toStudent()
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Exercise</h3>
 			</section>
 		</section>
 		<section>
@@ -130,7 +408,7 @@
 			<section>
 				<h3>Scope Functions</h3>
 				<div class="summary">
-					Scope functions are functions that allow you to execute a block of code within the context of an object.
+					Scope functions allow you to execute a block of code within the context of an object.
 				</div>
 				<div class="content">
 					<p>
@@ -144,85 +422,227 @@
 						<code class="inline">apply</code>,
 						and <code class="inline">also</code>.
 					</p>
-					<div style="background-color: yellow">TODO</div>
+					<p>
+						Each scope function has a different context object and return value, which makes them useful for different use cases.
+					</p>
+					<br />
+					<table style="font-size: 80%">
+						<thead>
+						<tr>
+							<td><strong>Function</strong></td>
+							<td><strong>Context object</strong></td>
+							<td><strong>Return value</strong></td>
+							<td><strong>Usage</strong></td>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td><code class="inline">let</code></td>
+							<td><strong>it</strong></td>
+							<td>Result of the lambda expression</td>
+							<td>Execute a block of code on the result of a call chain or to work with nullable objects</td>
+						</tr>
+						<tr>
+							<td><code class="inline">run</code></td>
+							<td><strong>this</strong></td>
+							<td>Result of the lambda expression</td>
+							<td>Often used when you want to perform multiple operations on an object and return a result</td>
+						</tr>
+						<tr>
+							<td><code class="inline">with</code></td>
+							<td><strong>this</strong></td>
+							<td>Result of the lambda expression</td>
+							<td>Execute a block of code on an object</td>
+						</tr>
+						<tr>
+							<td><code class="inline">apply</code></td>
+							<td><strong>this</strong></td>
+							<td>The context object itself</td>
+							<td>Typically used for initializing or configuring an object.</td>
+						</tr>
+						<tr>
+							<td><code class="inline">also</code></td>
+							<td><strong>it</strong></td>
+							<td>The context object itself</td>
+							<td>Perform additional operations on an object without changing the object itself</td>
+						</tbody>
+					</table>
 				</div>
 			</section>
 			<section>
 				<h3>let</h3>
 				<div class="summary">
-					The let function allows you to execute a block of code on a result of call chains (object).
+					Execute a block of code on the result of a call chain or to work with nullable objects.
 				</div>
 				<div class="content">
 					<p>
-						It is often used to execute a block of code on the result of a call chain, such as filter, map, or any other operation that returns a value.
+						The context object of the <code class="inline">let</code> function is referred to as <code class="inline">it</code>
+						and the return value is the result of the lambda expression.
 					</p>
+					<p>
+						The <code class="inline">let</code> function is particularly useful when used with a nullable types,
+						because it allows us to chain multiple operations on a nullable object.
+					</p>
+					<br />
+					<strong>Example:</strong> using <code class="inline">let</code> to work with nullable objects
 					<pre>
 						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
-							val cities = listOf("Bangkok", "Barcelona", "Tokyo", "London", "New York")
-
-							val result = cities
-								.filter { it.startsWith("B") }
-								.let { println(it) }
+							data class Message(
+								val text: String?,
+								var acknowledged: Boolean = false
+							) {
+								fun send(): Message {
+									TODO("Response message")
+								}
+							}
 						</code>
 					</pre>
-					<p>
-						The <code class="inline">let</code> function is particularly useful when used with a nullable object.
-					</p>
 					<pre>
 						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
-							val name: String? = "John"
+							val message = Message(text = "Hello")
 
-							name?.let { println("Name is $it) } ?: println("Name is was not given")
+							val response = message.send()
+
+							val text = response.text?.let {
+								println("Received message: $it")
+							}
+
+							// process text
 						</code>
 					</pre>
 				</div>
 			</section>
 			<section>
 				<h3>run</h3>
-				<div class="summary"></div>
-				<div class="content"></div>
+				<div class="summary">
+					Often used when you want to perform multiple operations on an object and return a result.
+				</div>
+				<div class="content">
+					<p>
+						The context object of the <code class="inline">run</code> function is referred to as <code class="inline">this</code>
+						and the return value is the result of the lambda expression.
+					</p>
+					<strong>Example 1:</strong> Using run to initialize an object
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							data class Message(
+								val text: String?,
+								var acknowledged: Boolean = false
+							) {
+								fun send(): Message {
+									TODO("Response message")
+								}
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val message = Message(text = "Hello").run {
+								if (send().acknowledged) {
+									println("Message acknowledged")
+								} else {
+									println("Message not acknowledged")
+								}
+								this
+							}
+						</code>
+					</pre>
+				</div>
 			</section>
 			<section>
 				<h3>with</h3>
 				<div class="summary">
-
+					User when you want to execute a block of code on an object.
 				</div>
 				<div class="content">
+					Example 1: Using run to initialize an object
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							data class Message(
+								val text: String?,
+								var acknowledged: Boolean = false
+							) {
+								fun send(): Message {
+									TODO("Response message")
+								}
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val message =  Message(text = "Hello")
 
+							with(message) {
+								if (send().acknowledged) {
+									println("Message acknowledged")
+								} else {
+									println("Message not acknowledged")
+								}
+							}
+						</code>
+					</pre>
 				</div>
 			</section>
 			<section>
 				<h3>apply</h3>
 				<div class="summary">
-
+					Typically used for initializing or configuring an object.
 				</div>
 				<div class="content">
-
+					<strong>Example 1:</strong> Using apply to initialize an object
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							data class Message(
+								val text: String?,
+								var acknowledged: Boolean = false
+							) {
+								fun send(): Message {
+									TODO("Response message")
+								}
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							   val message =  Message(text = "Hello").apply {
+									acknowledged = true
+								}
+						</code>
+					</pre>
 				</div>
 			</section>
 			<section>
 				<h3>also</h3>
 				<div class="summary">
-
+					used when you want to perform additional operations on an object without changing the object itself.
 				</div>
 				<div class="content">
+					<strong>Example 1:</strong> Using also to print the object
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							data class Message(
+								val text: String?,
+								var acknowledged: Boolean = false
+							) {
+								fun send(): Message {
+									TODO("Response message")
+								}
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val message = Message(text = "Hello")
+								.also { println(it)  }
 
+							val response = message.send()
+								.also { println(it)  }
+						</code>
+					</pre>
 				</div>
-			</section>
-		</section>
-		<section>
-			<section data-background-gradient="var(--kotlin-gradient)">
-				<h2>Kotlin Standard Library</h2>
-				<em>Preconditions</em>
 			</section>
 			<section>
-				<h3>Convenience Functions</h3>
-				<div class="summary">
-					TODO
-				</div>
-				<div class="content">
-					TODO
-				</div>
+				<h3>Exercise</h3>
 			</section>
 		</section>
 		<section>
