@@ -503,7 +503,7 @@
 						</tbody>
 					</table>
 					<p>
-						This is an orthogonal array of 2 factors with 2 levels each - L4(2^3).
+						This is an orthogonal array of 2 factors with 2 levels each - L4(2^2).
 					</p>
 				</div>
 			</section>
@@ -646,7 +646,7 @@
 			<section>
 				<h3>JUnit</h3>
 				<div class="summary">
-					<strong>JUnit</strong> of the most commonly used testing frameworks for Java.
+					<strong>JUnit</strong> of the most commonly used testing frameworks for Java and also for Kotlin.
 				</div>
 				<div class="content">
 					<p>
@@ -658,7 +658,9 @@
 						<li>Evaluate test results</li>
 					</ul>
 					<p>
-						There are other of unit testing frameworks available in Kotlin.
+						There are other of unit testing frameworks available in Kotlin, such as <strong>Kotest</strong><br />
+					</p>
+					<p>
 						The concepts that we will learn with JUnit generally apply to all unit testing frameworks.
 					</p>
 				</div>
@@ -924,6 +926,70 @@
 		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Dependency Management</h2>
+			</section>
+			<section>
+				<h3>Dependency Management in Java</h3>
+				<div class="summary">
+					Kotlin (JDK) comes with a set of libraries that allow us to do some basic development tasks.
+					However, kotlin programmes often require more.
+				</div>
+				<div class="content">
+					<p>
+						As with any modern language, you can extend your code by using libraries, in Java, they are called
+						dependencies.
+					</p>
+					<p>
+						You could manage your dependencies manually, by adding their <strong>jar</strong> files to the project.
+						Or you can use a tool to help you do that.
+					</p>
+					<p>
+						There are two major tools for project and dependency management:
+					<ul>
+						<li><a href="https://maven.apache.org/">Maven</a></li>
+						<li><a href="https://gradle.org/">Gradle</a></li>
+					</ul>
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Dependency Management in Java/Kotlin</h3>
+				<div class="summary">
+					Besides managing dependencies, these tools also take care of setting up your <strong>project</strong>,
+					<strong>modules</strong>, <strong>plugins</strong> and more.
+				</div>
+				<div class="content">
+					<ol>
+						<li>Java version management</li>
+						<li>
+							Dependency and version management (in scope)
+							<ul>
+								<li>development, test, runtime</li>
+							</ul>
+						</li>
+						<li>Project structure</li>
+						<li>
+							Task configurations
+							<ul>
+								<li>build, publishing, testing</li>
+								<li>documentation, code generation, data migrations</li>
+							</ul>
+						</li>
+						<li>
+							Plugins
+							<ul>
+								<li>developer tools, code quality, ...</li>
+							</ul>
+						</li>
+					</ol>
+					<p>
+						Our project is using <a href="https://gradle.org/">Gradle</a>.
+					</p>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
 				<h2>Logging</h2>
 			</section>
 			<section>
@@ -961,8 +1027,98 @@
 					</pre>
 				</div>
 			</section>
-		</section>
+			<section>
+				<h3>Logging Levels</h3>
+				<div class="summary">
+					Each logging framework has a set of logging levels that can be used to control the amount of information that is logged.
+				</div>
+				<div class="content">
+					<p>
+						There are several logging levels, such as <strong>TRACE</strong>, <strong>DEBUG</strong>, <strong>INFO</strong>, <strong>WARN</strong>, <strong>ERROR</strong> and <strong>FATAL</strong>.
+					</p>
+					<p>
+						By setting the logging level, you can control the amount of information that is logged.
+						For example, if you set the logging level to <strong>INFO</strong>, only messages with level <strong>INFO</strong> and higher will be logged.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Exercise</h3>
+				<div class="summary">
+					Setup logging for your project.
+				</div>
+				<div class="content">
+					<p>
+						Add a Gradle dependency for <strong>Kotlin-logging</strong> and use it in your project by adding
+						the following to the **build.gradle.kts** file dependencies section.
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							implementation("org.slf4j:slf4j-api:2.0.7")
+							implementation("org.slf4j:slf4j-simple:2.0.7")
+							implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
+						</code>
+					</pre>
+					<p>
+						So it might look like this:
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							dependencies {
+								implementation("org.slf4j:slf4j-api:2.0.7")
+								implementation("org.slf4j:slf4j-simple:2.0.7")
+								implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
+								testImplementation(kotlin("test"))
+							}
+						</code>
+					</pre>
+					<p>
+						Configure logging by adding configuration to the <strong>logback.xml</strong> file to resources.
+					</p>
+					<p>
+						In your code, you add a logger by adding <code class="inline">KotlinLogging.logger { }</code>
+						and use it by calling<br />
+						<code class="inline">logger.info { "info message" }</code>,<br />
+						<code class="inline">logger.debug { "debug message" }</code>,<br />
+						<code class="inline">logger.error { "error message" }</code>, <br />
+						etc.
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							import io.github.oshai.kotlinlogging.KotlinLogging
 
+							private val logger = KotlinLogging.logger { }
+
+							fun main() {
+								logger.info { "Hello, World!" }
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Exercise</h3>
+				<div class="summary">
+					Configure logging levels and appenders.
+				</div>
+				<div class="content">
+<!--					<pre>-->
+<!--						<code data-trim data-noescape class="hljs xml"&gt;-->
+<!--							&lt;?xml version="1.0" encoding="UTF-8"?&gt;-->
+<!--							&lt;configuration&gt;-->
+<!--								&lt;include resource="org/springframework/boot/logging/logback/defaults.xml"/&gt;-->
+<!--								&lt;include resource="org/springframework/boot/logging/logback/console-appender.xml" /&gt;-->
+<!--								&lt;root level="INFO"&gt;-->
+<!--									&lt;appender-ref ref="CONSOLE" /&gt;-->
+<!--								&lt;/root&gt;-->
+<!--								&lt;logger name="*" level="DEBUG"/&gt;-->
+<!--								&lt;logger name="com.motycka" level="DEBUG"/&gt;-->
+<!--							&lt;/configuration&gt;-->
+<!--						</code>-->
+<!--					</pre>-->
+				</div>
+			</section>
+		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
 				<h2>Debugging</h2>
@@ -1040,70 +1196,6 @@
 					</div>
 					<p>
 						For details, see <a href="https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html">Javadoc Tool</a>
-					</p>
-				</div>
-			</section>
-		</section>
-		<section>
-			<section data-background-gradient="var(--kotlin-gradient)">
-				<h2>Dependency Management</h2>
-			</section>
-			<section>
-				<h3>Dependency Management in Java</h3>
-				<div class="summary">
-					Kotlin (JDK) comes with a set of libraries that allow us to do some basic development tasks.
-					However, kotlin programmes often require more.
-				</div>
-				<div class="content">
-					<p>
-						As with any modern language, you can extend your code by using libraries, in Java, they are called
-						dependencies.
-					</p>
-					<p>
-						You could manage your dependencies manually, by adding their <strong>jar</strong> files to the project.
-						Or you can use a tool to help you do that.
-					</p>
-					<p>
-						There are two major tools for project and dependency management:
-						<ul>
-							<li><a href="https://maven.apache.org/">Maven</a></li>
-							<li><a href="https://gradle.org/">Gradle</a></li>
-						</ul>
-					</p>
-				</div>
-			</section>
-			<section>
-				<h3>Dependency Management in Java/Kotlin</h3>
-				<div class="summary">
-					Besides managing dependencies, these tools also take care of setting up your <strong>project</strong>,
-					<strong>modules</strong>, <strong>plugins</strong> and more.
-				</div>
-				<div class="content">
-					<ol>
-						<li>Java version management</li>
-						<li>
-							Dependency and version management (in scope)
-							<ul>
-								<li>development, test, runtime</li>
-							</ul>
-						</li>
-						<li>Project structure</li>
-						<li>
-							Task configurations
-							<ul>
-								<li>build, publishing, testing</li>
-								<li>documentation, code generation, data migrations</li>
-							</ul>
-						</li>
-						<li>
-							Plugins
-							<ul>
-								<li>developer tools, code quality, ...</li>
-							</ul>
-						</li>
-					</ol>
-					<p>
-						Our project is using <a href="https://gradle.org/">Gradle</a>.
 					</p>
 				</div>
 			</section>
