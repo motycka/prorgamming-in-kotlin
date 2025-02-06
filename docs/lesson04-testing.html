@@ -19,8 +19,281 @@
 		<section data-background-gradient="var(--kotlin-gradient)">
 			<i>Week 1 | Lesson 4</i>
 			<h1>Testing</h1>
-			<em>Testing fundamentals, Levels of testing, Kotest</em><br />
-			<em>Dependency Management</em>
+			<em>Dependency Management, Logging, Debugging, Documentation</em><br/>
+			<em>Testing fundamentals, Levels of testing, JUnit</em><br />
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Dependency Management</h2>
+			</section>
+			<section>
+				<h3>Dependency Management in Java</h3>
+				<div class="summary">
+					Kotlin (JDK) comes with a set of libraries that allow us to do some basic development tasks.
+					However, kotlin programmes often require more.
+				</div>
+				<div class="content">
+					<p>
+						As with any modern language, you can extend your code by using libraries, in Java, they are called
+						dependencies.
+					</p>
+					<p>
+						You could manage your dependencies manually, by adding their <strong>jar</strong> files to the project.
+						Or you can use a tool to help you do that.
+					</p>
+					<p>
+						There are two major tools for project and dependency management:
+					<ul>
+						<li><a href="https://maven.apache.org/">Maven</a></li>
+						<li><a href="https://gradle.org/">Gradle</a></li>
+					</ul>
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Dependency Management in Java/Kotlin</h3>
+				<div class="summary">
+					Besides managing dependencies, these tools also take care of setting up your <strong>project</strong>,
+					<strong>modules</strong>, <strong>plugins</strong> and more.
+				</div>
+				<div class="content">
+					<ol>
+						<li>Java version management</li>
+						<li>
+							Dependency and version management (in scope)
+							<ul>
+								<li>development, test, runtime</li>
+							</ul>
+						</li>
+						<li>Project structure</li>
+						<li>
+							Task configurations
+							<ul>
+								<li>build, publishing, testing</li>
+								<li>documentation, code generation, data migrations</li>
+							</ul>
+						</li>
+						<li>
+							Plugins
+							<ul>
+								<li>developer tools, code quality, ...</li>
+							</ul>
+						</li>
+					</ol>
+					<p>
+						Our project is using <a href="https://gradle.org/">Gradle</a>.
+					</p>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Logging</h2>
+			</section>
+			<section>
+				<h3>Logging</h3>
+				<div class="summary">
+					Logging is an important aspect of software quality.
+					It allows us to monitor the behavior of the software while it is running in real world conditions,
+					and to diagnose possible problems.
+				</div>
+				<div class="content">
+					<p>
+						Several login frameworks are available in Java, such as <strong>Log4j</strong>, <strong>Logback</strong> and <strong>java.common.logging</strong>.
+					</p>
+					<p>
+						One of the popular Kotlin-specific logging frameworks is <strong>Kotlin-logging</strong>.
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							import mu.KLogging
+
+							object TemperatureConverter: KLogging() {
+
+								fun toCelsius(fahrenheit: Double): Double {
+									logger.info("Converting $fahrenheit Fahrenheit to Celsius")
+									return (fahrenheit - 32) * 5 / 9
+								}
+
+								fun toFahrenheit(celsius: Double): Double {
+									logger.info("Converting $celsius Celsius to Fahrenheit")
+									return celsius * 9 / 5 + 32
+								}
+
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Logging Levels</h3>
+				<div class="summary">
+					Each logging framework has a set of logging levels that can be used to control the amount of information that is logged.
+				</div>
+				<div class="content">
+					<p>
+						There are several logging levels, such as <strong>TRACE</strong>, <strong>DEBUG</strong>, <strong>INFO</strong>, <strong>WARN</strong>, <strong>ERROR</strong> and <strong>FATAL</strong>.
+					</p>
+					<p>
+						By setting the logging level, you can control the amount of information that is logged.
+						For example, if you set the logging level to <strong>INFO</strong>, only messages with level <strong>INFO</strong> and higher will be logged.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Exercise</h3>
+				<div class="summary">
+					Setup logging for your project.
+				</div>
+				<div class="content">
+					<p>
+						Add a Gradle dependency for <strong>Kotlin-logging</strong> and use it in your project by adding
+						the following to the <strong>build.gradle.kts</strong> file dependencies section, so it might look like:
+						So it might look like this:
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							dependencies {
+								implementation("org.slf4j:slf4j-api:2.0.7")
+								implementation("ch.qos.logback:logback-classic:1.4.11")
+								implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
+								testImplementation(kotlin("test"))
+							}
+						</code>
+					</pre>
+					<p>
+						In your code, you add a logger by adding <code class="inline">KotlinLogging.logger { }</code>
+						and use it by calling<br />
+						<code class="inline">logger.info { "info message" }</code>,<br />
+						<code class="inline">logger.debug { "debug message" }</code>,<br />
+						<code class="inline">logger.error { "error message" }</code>, <br />
+						etc.
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							import io.github.oshai.kotlinlogging.KotlinLogging
+
+							private val logger = KotlinLogging.logger { }
+
+							fun main() {
+								logger.info { "Hello, World!" }
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Exercise</h3>
+				<div class="summary">
+					Configure logging levels and appenders.
+				</div>
+				<div class="content">
+					<p>
+						Include this file in your <strong>src/main/kotlin/resources</strong> folder.
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+								&lt;configuration&gt;
+									&lt;statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" /&gt;
+
+									&lt;appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"&gt;
+										&lt;encoder&gt;
+											&lt;pattern&gt;%d{HH:mm:ss} %highlight(%-5level) [%thread] %cyan(%logger{1}) - %msg%n&lt;/pattern&gt;
+										&lt;/encoder&gt;
+										&lt;filter class="ch.qos.logback.classic.filter.ThresholdFilter"&gt;
+											&lt;level&gt;INFO&lt;/level&gt;
+										&lt;/filter&gt;
+									&lt;/appender&gt;
+									&lt;root level="TRACE"&gt;
+										&lt;appender-ref ref="STDOUT" /&gt;
+									&lt;/root&gt;
+									&lt;logger name="*" level="DEBUG"/&gt;
+								&lt;/configuration&gt;
+						</code>
+					</pre>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Debugging</h2>
+			</section>
+			<section>
+				<h3>Debugging</h3>
+				<div class="summary">
+					Debugging is the process of finding and resolving defects or problems within a computer program that prevent correct operation of computer software or a system.
+				</div>
+				<div class="content content-center content-100">
+					<p>
+						<strong>It is an essential skill of any software developer.</strong>
+					</p>
+					<p>
+						Usually, an IDE (such as IntelliJ IDEA) will have a debugger built in,
+						which will allow you to <strong>step</strong> through your code,
+						<strong>inspect variables</strong> and <strong>evaluate expressions</strong>
+						to see what the program is doing, while it is executing
+					</p>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Documentation</h2>
+			</section>
+			<section>
+				<h3>Java Documentation</h3>
+				<div class="summary">
+					Another important aspect of software quality is documentation.
+				</div>
+				<div class="content">
+					In Java, we can use a tool called <strong>Javadoc</strong> to generate documentation from our code.
+					<div class="row">
+						<div class="column" style="font-size: 80%">
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									object TemperatureConverter: KLogging() {
+
+										/**
+										 * Converts temperature value given in Fahrenheit to Celsius
+										 *
+										 * @param fahrenheit temperature value in Fahrenheit
+										 * @return temperature value in Celsius
+										 * @see [Fahrenheit](https://en.wikipedia.org/wiki/Fahrenheit)
+										 * @see [Celsius](https://en.wikipedia.org/wiki/Celsius)
+										 */
+										fun toCelsius(fahrenheit: Double): Double {
+											logger.info("Converting $fahrenheit Fahrenheit to Celsius")
+											return (fahrenheit - 32) * 5 / 9
+										}
+
+										/**
+										 * Converts temperature value given in Celsius to Fahrenheit
+										 *
+										 * @param celsius temperature value in Celsius
+										 * @return temperature value in Fahrenheit
+										 * @see [Fahrenheit](https://en.wikipedia.org/wiki/Fahrenheit)
+										 * @see [Celsius](https://en.wikipedia.org/wiki/Celsius)
+										 */
+										fun toFahrenheit(celsius: Double): Double {
+											logger.info("Converting $celsius Celsius to Fahrenheit")
+											return celsius * 9 / 5 + 32
+										}
+
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							<img src="./img/javadoc.png" alt="Javadoc">
+						</div>
+
+					</div>
+					<p>
+						For details, see <a href="https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html">Javadoc Tool</a>
+					</p>
+				</div>
+			</section>
 		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
@@ -503,7 +776,7 @@
 						</tbody>
 					</table>
 					<p>
-						This is an orthogonal array of 2 factors with 2 levels each - L4(2^3).
+						This is an orthogonal array of 2 factors with 2 levels each - L4(2^2).
 					</p>
 				</div>
 			</section>
@@ -646,7 +919,7 @@
 			<section>
 				<h3>JUnit</h3>
 				<div class="summary">
-					<strong>JUnit</strong> of the most commonly used testing frameworks for Java.
+					<strong>JUnit</strong> of the most commonly used testing frameworks for Java and also for Kotlin.
 				</div>
 				<div class="content">
 					<p>
@@ -658,7 +931,9 @@
 						<li>Evaluate test results</li>
 					</ul>
 					<p>
-						There are other of unit testing frameworks available in Kotlin.
+						There are other of unit testing frameworks available in Kotlin, such as <strong>Kotest</strong><br />
+					</p>
+					<p>
 						The concepts that we will learn with JUnit generally apply to all unit testing frameworks.
 					</p>
 				</div>
@@ -920,192 +1195,6 @@
 						}
 					</code>
 				</pre>
-			</section>
-		</section>
-		<section>
-			<section data-background-gradient="var(--kotlin-gradient)">
-				<h2>Logging</h2>
-			</section>
-			<section>
-				<h3>Logging</h3>
-				<div class="summary">
-					Logging is an important aspect of software quality.
-					It allows us to monitor the behavior of the software while it is running in real world conditions,
-					and to diagnose possible problems.
-				</div>
-				<div class="content">
-					<p>
-						Several login frameworks are available in Java, such as <strong>Log4j</strong>, <strong>Logback</strong> and <strong>java.common.logging</strong>.
-					</p>
-					<p>
-						One of the popular Kotlin-specific logging frameworks is <strong>Kotlin-logging</strong>.
-					</p>
-					<pre>
-						<code data-trim data-noescape class="hljs kotlin">
-							import mu.KLogging
-
-							object TemperatureConverter: KLogging() {
-
-								fun toCelsius(fahrenheit: Double): Double {
-									logger.info("Converting $fahrenheit Fahrenheit to Celsius")
-									return (fahrenheit - 32) * 5 / 9
-								}
-
-								fun toFahrenheit(celsius: Double): Double {
-									logger.info("Converting $celsius Celsius to Fahrenheit")
-									return celsius * 9 / 5 + 32
-								}
-
-							}
-						</code>
-					</pre>
-				</div>
-			</section>
-		</section>
-
-		<section>
-			<section data-background-gradient="var(--kotlin-gradient)">
-				<h2>Debugging</h2>
-			</section>
-			<section>
-				<h3>Debugging</h3>
-				<div class="summary">
-					Debugging is the process of finding and resolving defects or problems within a computer program that prevent correct operation of computer software or a system.
-				</div>
-				<div class="content content-center content-100">
-					<p>
-						<strong>It is an essential skill of any software developer.</strong>
-					</p>
-					<p>
-						Usually, an IDE (such as IntelliJ IDEA) will have a debugger built in,
-						which will allow you to <strong>step</strong> through your code,
-						<strong>inspect variables</strong> and <strong>evaluate expressions</strong>
-						to see what the program is doing, while it is executing
-					</p>
-				</div>
-			</section>
-		</section>
-
-		<section>
-			<section data-background-gradient="var(--kotlin-gradient)">
-				<h2>Documentation</h2>
-			</section>
-			<section>
-				<h3>Java Documentation</h3>
-				<div class="summary">
-					Another important aspect of software quality is documentation.
-				</div>
-				<div class="content">
-					In Java, we can use a tool called <strong>Javadoc</strong> to generate documentation from our code.
-					<div class="row">
-						<div class="column" style="font-size: 80%">
-							<pre>
-								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
-									object TemperatureConverter: KLogging() {
-
-										/**
-										 * Converts temperature value given in Fahrenheit to Celsius
-										 *
-										 * @param fahrenheit temperature value in Fahrenheit
-										 * @return temperature value in Celsius
-										 * @see [Fahrenheit](https://en.wikipedia.org/wiki/Fahrenheit)
-										 * @see [Celsius](https://en.wikipedia.org/wiki/Celsius)
-										 */
-										fun toCelsius(fahrenheit: Double): Double {
-											logger.info("Converting $fahrenheit Fahrenheit to Celsius")
-											return (fahrenheit - 32) * 5 / 9
-										}
-
-										/**
-										 * Converts temperature value given in Celsius to Fahrenheit
-										 *
-										 * @param celsius temperature value in Celsius
-										 * @return temperature value in Fahrenheit
-										 * @see [Fahrenheit](https://en.wikipedia.org/wiki/Fahrenheit)
-										 * @see [Celsius](https://en.wikipedia.org/wiki/Celsius)
-										 */
-										fun toFahrenheit(celsius: Double): Double {
-											logger.info("Converting $celsius Celsius to Fahrenheit")
-											return celsius * 9 / 5 + 32
-										}
-
-									}
-								</code>
-							</pre>
-						</div>
-						<div class="column">
-							<img src="./img/javadoc.png" alt="Javadoc">
-						</div>
-
-					</div>
-					<p>
-						For details, see <a href="https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html">Javadoc Tool</a>
-					</p>
-				</div>
-			</section>
-		</section>
-		<section>
-			<section data-background-gradient="var(--kotlin-gradient)">
-				<h2>Dependency Management</h2>
-			</section>
-			<section>
-				<h3>Dependency Management in Java</h3>
-				<div class="summary">
-					Kotlin (JDK) comes with a set of libraries that allow us to do some basic development tasks.
-					However, kotlin programmes often require more.
-				</div>
-				<div class="content">
-					<p>
-						As with any modern language, you can extend your code by using libraries, in Java, they are called
-						dependencies.
-					</p>
-					<p>
-						You could manage your dependencies manually, by adding their <strong>jar</strong> files to the project.
-						Or you can use a tool to help you do that.
-					</p>
-					<p>
-						There are two major tools for project and dependency management:
-						<ul>
-							<li><a href="https://maven.apache.org/">Maven</a></li>
-							<li><a href="https://gradle.org/">Gradle</a></li>
-						</ul>
-					</p>
-				</div>
-			</section>
-			<section>
-				<h3>Dependency Management in Java/Kotlin</h3>
-				<div class="summary">
-					Besides managing dependencies, these tools also take care of setting up your <strong>project</strong>,
-					<strong>modules</strong>, <strong>plugins</strong> and more.
-				</div>
-				<div class="content">
-					<ol>
-						<li>Java version management</li>
-						<li>
-							Dependency and version management (in scope)
-							<ul>
-								<li>development, test, runtime</li>
-							</ul>
-						</li>
-						<li>Project structure</li>
-						<li>
-							Task configurations
-							<ul>
-								<li>build, publishing, testing</li>
-								<li>documentation, code generation, data migrations</li>
-							</ul>
-						</li>
-						<li>
-							Plugins
-							<ul>
-								<li>developer tools, code quality, ...</li>
-							</ul>
-						</li>
-					</ol>
-					<p>
-						Our project is using <a href="https://gradle.org/">Gradle</a>.
-					</p>
-				</div>
 			</section>
 		</section>
 		<section>
