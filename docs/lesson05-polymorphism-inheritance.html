@@ -12,6 +12,18 @@
 
 	<!-- Theme used for syntax highlighted code -->
 	<link rel="stylesheet" href="plugin/highlight/vs.css">
+	<style>
+
+		.exercise-formatting p {
+			/*margin-top: 20px;*/
+			margin-bottom: 2px;
+			padding-bottom: 5px;
+		}
+		.exercise-formatting li {
+			padding: 0;
+			margin-left: 10px
+		}
+	</style>
 </head>
 <body>
 <div class="reveal">
@@ -392,14 +404,6 @@
 			</section>
 			<section>
 				<h3>Composition and Inheritance</h3>
-<!--				<div class="summary">-->
-<!--					Both inheritance and composition have their strengths and weaknesses-->
-<!--					and deciding when to use each-->
-<!--					can be instrumental for designing cleaner and more effective code.-->
-<!--					<br />-->
-<!--					<br />-->
-<!--					The two techniques can be, and often are, combined.-->
-<!--				</div>-->
 				<div class="content">
 					<blockquote>
 						Both inheritance and composition have their strengths and weaknesses.
@@ -453,6 +457,72 @@
 						</tr>
 						</tbody>
 					</table>
+				</div>
+			</section>
+			<section>
+				<h3>Exercise: Inheritance #1</h3>
+				<div class="content exercise-formatting">
+					<p>
+						Create an open class <strong>Character</strong> with the following properties:
+					</p>
+					<ul>
+						<li><code class="inline">val name: String</code></li>
+						<li><code class="inline">var health: Int</code></li>
+						<li><code class="inline">val attackPower: Int</code></li>
+					</ul>
+					<p>
+						Create an open method <code class="inline">receiveAttack(attackPower: Int)</code>
+						that will receive an attack and reduce the health of the character.
+					</p>
+					<ul>
+						<li>If the character has <strong>health <= 0</strong>, print <code class="inline">"$name has been defeated"</code></li>
+						<li>Else, print <code class="inline">"$name has $health health remaining"</code></li>
+					</ul>
+					<p>
+						Create an open method <code class="inline">attack(target: Character)</code>
+						that will attack the target character.
+					</p>
+					<ul>
+						<li>If the character has <strong>health <= 0</strong>, print <code class="inline">"$name is dead and cannot attack"</code></li>
+						<li>Else, print <code class="inline">"$name attacks ${target.name}"</code> and call <code class="inline">target.receiveAttack(attackPower)</code></li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Exercise: Inheritance #2</h3>
+				<div class="content exercise-formatting">
+					<p>
+						Create two other classes <strong>Warrior</strong> and <strong>Sorcerer</strong>
+						that inherit from <strong>Character</strong>.
+					</p>
+					<p>
+						You can use the following code to test your implementation:
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun main() {
+								match(
+									character1 = Warrior(name = "Thorne Ironfist", health = 100, attackPower = 10),
+									character2 = Sorcerer(name = "Eldrin Starfire", health = 50, attackPower = 20)
+								)
+							}
+
+							internal fun match(character1: Character, character2: Character) {
+								var round = 1
+								while (character1.health > 0 && character2.health > 0 && round <= 10) {
+									println("\nROUND $round:")
+									character1.attack(character2)
+									character2.attack(character1)
+									round++
+								}
+								when {
+									character1.health <= 0 && character2.health > 0 -> println("\n${character2.name} is the victor in round $round!")
+									character2.health <= 0 && character1.health > 0 -> println("\n${character2.name} is the victor in round $round!")
+									else -> println("\nIt's a draw!")
+								}
+							}
+						</code>
+					</pre>
 				</div>
 			</section>
 		</section>
@@ -589,7 +659,6 @@
 					</table>
 				</div>
 			</section>
-
 		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
@@ -875,15 +944,181 @@
 					</div>
 				</div>
 			</section>
-		</section>
-		<section>
-			<section data-background-gradient="var(--kotlin-gradient)">
-				<h2>Generics</h2>
+			<section>
+				<h3>Exercise: Abstraction #1</h3>
+				<div class="content exercise-formatting">
+					<p>
+						Update the <strong>Character</strong>, change the <strong>attack</strong> method to be
+						<code class="inline">abstract</code> and remove the implementation from the
+						<strong>Character</strong> class. Leave the <strong>receiveAttack</strong> function as it is.
+					</p>
+					<p>
+						Change the <strong>Warrior</strong> class, add a new private mutable property <code class="inline">private var stamina: Int</code>.
+					</p>
+					<p>
+						Update the <strong>attack</strong> function in the <strong>Warrior</strong> class:
+					</p>
+					<ul>
+						<li>If the warrior has <strong>health <= 0</strong>, print <code class="inline">"$name is dead and cannot attack"</code></li>
+						<li>If the warrior has <strong>stamina <= 0</strong>, print <code class="inline">"$name is too tired to attack"</code></li>
+						<li>Else, print <code class="inline">"$name swings a sword at ${target.name}"</code> and call <code class="inline">target.receiveAttack(attackPower)</code></li>
+						<li>Decrease the stamina by 1</li>
+					</ul>
+					<p>
+						Extend the Sorcerer class, add a new private mutable property <code class="inline">private var mana: Int</code>
+					</p>
+					<p>
+						Update the <strong>attack</strong> function in the <strong>Sorcerer</strong> class:
+					</p>
+					<ul>
+						<li>If the sorcerer has <strong>health <= 0</strong>, print <code class="inline">"$name is dead and cannot attack"</code></li>
+						<li>If the sorcerer has <strong>man <= 0</strong>, print <code class="inline">"$name is out of mana"</code></li>
+						<li>Else, print <code class="inline">"$name casts a spell at ${target.name}"</code> and call <code class="inline">target.receiveAttack(attackPower)</code></li>
+						<li>Decrease the mana by 1</li>
+					</ul>
+					<p>
+						Update the test code to use the new classes and properties and run the match function.
+					</p>
+				</div>
 			</section>
 			<section>
-				<h3>TODO</h3>
+				<h3>Exercise: Abstraction #2</h3>
+				<div class="content exercise-formatting">
+					<p>
+						Create new interfaces <strong>Defender</strong> with the following methods and properties:
+					</p>
+					<ul>
+						<li><code class="inline">val name: String</code></li>
+						<li><code class="inline">var stamina: Int</code></li>
+						<li><code class="inline">val defensePower: Int</code></li>
+						<li><code class="inline">fun defend(attackPower: Int): Int</code></li>
+					</ul>
+					<p>
+						Have the <strong>Warrior</strong> class <strong>implement</strong> the <strong>Defender</strong> interface:
+					</p>
+					<ul>
+						<li>Implement the <strong>defend</strong> method to <strong>reduce the attackPower by the defensePower and decrease the stamina by 1</strong></li>
+						<li>If the warrior has <strong>stamina <= 0</strong>, print <code class="inline">"$name is too tired to defend"</code> and return the <strong>attackPower</strong></li>
+						<li>If the warrior has <strong>stamina > 0</strong>, print <code class="inline">"$name raises shield and defends against $defensePower damage"</code> and return <strong>attackPower - defensePower</strong></li>
+						<li>Override the <strong>receiveAttack</strong> method to call the defend function and then call the super.receiveAttack function with the result</li>
+					</ul>
+					<p>Example:</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							override fun receiveAttack(attackPower: Int) {
+								super.receiveAttack(defend(health - attackPower))
+							}
+						</code>
+					</pre>
+					<p>
+						Update the test code to use the new classes and properties and run the match function.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Exercise: Abstraction #3</h3>
+				<div class="content exercise-formatting">
+					<p>
+						Create new interfaces <strong>Healer</strong> with the following methods and properties:
+					</p>
+					<ul>
+						<li>var mana: Int</li>
+						<li>val healingPower: Int</li>
+						<li>fun heal()</li>
+					</ul>
+					<p>
+						Have the <strong>Sorcerer</strong> class <strong>implement</strong> the <strong>Healer</strong> interface:
+					</p>
+					<ul>
+						<li>Implement the <strong>heal</strong> method to <strong>increase the health by the healingPower and decrease the mana by 1</strong></li>
+						<li>If the sorcerer has <strong>mana <= 0</strong>, print <code class="inline">"$name is out of mana"</code> and do not heal</li>
+						<li>If the sorcerer has <strong>mana > 0</strong>, print <code class="inline">"$name heals self to $health health"</code> and increase the health by <strong>healingPower</strong></li>
+						<li>Update the <strong>attack</strong> function to call <strong>heal</strong> function before attacking</li>
+					</ul>
+					<p>
+						Update the test code to use the new classes and properties and run the match function.
+					</p>
+				</div>
 			</section>
 		</section>
+<!--		<section>-->
+<!--			<section data-background-gradient="var(&#45;&#45;kotlin-gradient)">-->
+<!--				<h2>Generics</h2>-->
+<!--			</section>-->
+<!--			<section>-->
+<!--				<div class="summary">-->
+<!--					Generics allow us to create classes, interfaces, and methods that take types as parameters.-->
+<!--				</div>-->
+<!--				<div class="content">-->
+<!--					<p>-->
+<!--						They are a way to make our code more reusable by allowing us to use the same code with different types.-->
+<!--					</p>-->
+<!--					<p>-->
+<!--						In this example, we define a LinkedList, and add an element to it.-->
+<!--						The compiler will not complain about this, at this point, it knows we are adding a String to the list.-->
+<!--					</p>-->
+
+<!--					However, when we try to get the element from the list, the compiler will complain, because it doesn't know what type of element is in the list.-->
+
+<!--					To fix this, we can tell the compiler what type of elements are in the list.-->
+
+<!--					<pre>-->
+<!--						<code data-trim data-noescape data-line-numbers class="hljs kotlin">-->
+<!--							val list = LinkedList<String>()-->
+<!--							list.add("Hello World")-->
+
+<!--							val str = list[0] // this is OK-->
+<!--							println(str)-->
+<!--						</code>-->
+<!--					</pre>-->
+<!--				</div>-->
+
+
+
+<!--			</section>-->
+<!--			<section>-->
+<!--				<h3>Exercise</h3>-->
+<!--				<div class="summary">-->
+<!--					TODO-->
+<!--				</div>-->
+<!--				<div class="content">-->
+<!--					Crete a generic class Box that can hold any type of item. The class should have two methods:-->
+<!--					- putItem(item: T) that puts an item into the box-->
+<!--					- getItem(): T? that returns the item from the box-->
+<!--					- store the item as a private property in the class-->
+
+<!--					Create instance of the Box class with different types and test the methods.-->
+
+
+
+
+
+<!--					Crete a generic function insertIntoBox that takes three parameters:-->
+<!--					- item1 of type T1-->
+<!--					- item2 of type T2-->
+<!--					- func of type (T1, T2) -> R-->
+
+<!--					The function should return the result of calling the func with item1 and item2 as arguments.-->
+
+<!--					Call the function with two different types of items and a lambda that combines the items into a string.-->
+
+
+
+
+
+<!--					Create a generic interface Drawer that has three type parameters:-->
+<!--					- T1-->
+<!--					- T2-->
+<!--					- R-->
+
+<!--					The interface should have a single method insert that takes two parameters of type T1 and T2 and returns a value of type R.-->
+
+<!--					Create a class SmallDrawer that implements the Drawer interface with different types.-->
+
+<!--					Create an instance of the SmallDrawer class and test the insert method.-->
+<!--				</div>-->
+<!--			</section>-->
+<!--		</section>-->
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
 				<h2>Exceptions</h2>
@@ -990,9 +1225,6 @@
 				<h3>Throwing exceptions</h3>
 				<div class="summary">
 					"Throwing an exception" refers to the process of creating an instance of an Exception (or its subclass) and handing it off to the runtime system to handle.
-<!--					<br />-->
-<!--					<br />-->
-<!--					It's a way of signaling that a method cannot complete its normal computation due to some kind of exceptional condition.-->
 				</div>
 				<div class="content">
 					<p>
@@ -1009,8 +1241,6 @@
 						<li>
 							If you want to declare that a method may throw an exception,
 							you can use the <code class="inline">@Throws</code> annotation.
-<!--							The <code><strong>throws</strong></code> keyword is used to declare exceptions.-->
-<!--							It doesn't throw an exception but specifies that there may occur an exception in the method.-->
 						</li>
 						<li>
 							Declaring that a method throws an exception is a way of signaling to the caller that the method may not complete normally, so that the caller can handle it.
@@ -1118,6 +1348,30 @@
 							}
 						</code>
 					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Exercise</h3>
+				<div class="content exercise-formatting">
+					<p>
+						Create a class <strong>OutOfFuelException</strong> that extends <strong>Throwable</strong> and sets the message to <code class="inline">"Car is out of fuel."</code>
+					</p>
+					<p>
+						Create a class <strong>Car</strong> with the following properties and methods:
+					</p>
+					<ul>
+						<li><code class="inline">private var fuelKm: Int</code></li>
+						<li><code class="inline">fun drive(distance: Int)</code> that will check if car has enough fuel to drive the distance and reduce the fuelKm by the distance</li>
+					</ul>
+					<p>
+						Create an instance of the <strong>Car</strong> class and test the drive method with a distance that is greater than the fuelKm.
+					</p>
+					<p>
+						Use a <code class="inline">try-catch-finally</code> block to catch the <strong>OutOfFuelException</strong> and print the message.
+					</p>
+					<p>
+						Add another catch block to catch any other Exception and print the message.
+					</p>
 				</div>
 			</section>
 		</section>
